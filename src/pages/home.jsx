@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
+import { tempDatabase } from "../temp_database";
 
 export default function Home() {
-  const requestHeader = {
+  /*  const requestHeader = {
     method: "GET",
     mode: "cors",
   };
@@ -10,7 +11,13 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
-  }, []);
+  }, []);*/
 
-  return <div>Home Page</div>;
+  return (
+    <div>
+      Home Page
+      <br></br>
+      {tempDatabase[0].image_urls}
+    </div>
+  );
 }
