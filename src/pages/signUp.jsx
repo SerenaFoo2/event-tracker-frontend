@@ -4,7 +4,6 @@ import { TextField, Button, Typography, Stack, Box } from "@mui/material";
 import { FooterText } from "../styles/signUp";
 
 export default function SignUp() {
-  //form to collect all inputs
   const inputDefault = { name: "", email: "", password: "" };
   const errorDefault = { message: "" };
 
@@ -57,7 +56,6 @@ export default function SignUp() {
 
     //update inputs
     setInput((prev) => {
-      console.log({ ...prev, [name]: e.target.value });
       return { ...prev, [name]: e.target.value };
     });
   };
@@ -69,7 +67,7 @@ export default function SignUp() {
         <Typography variant="h6">Create Account</Typography>
       </Box>
       <Stack justifyContent="center" alignItems="center">
-        <form onSubmit={handleSubmit}>
+        <Box component="form" onSubmit={handleSubmit}>
           <Stack spacing={2} p={3} sx={{ width: 250 }}>
             <TextField
               inputProps={{ style: { fontSize: 14 } }}
@@ -125,7 +123,7 @@ export default function SignUp() {
               <FooterText sx={{ color: "red" }}>{error.message}</FooterText>
             )}
           </Stack>
-        </form>
+        </Box>
 
         <Stack spacing={2} sx={{ width: 250 }}>
           <FooterText>
