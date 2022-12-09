@@ -5,11 +5,11 @@ import CalenderDay from "./pages/calenderDay";
 import Event from "./pages/event";
 import SignUp from "./pages/signUp";
 import Login from "./pages/login";
-import { ExampleCartContextProvider } from "./context/example_CartContext";
+import { TokenContextProvider } from "./context/TokenContext";
 
 function App() {
   return (
-    <ExampleCartContextProvider>
+    <TokenContextProvider>
       <Router>
         <Routes>
           <Route path="/">
@@ -22,7 +22,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </ExampleCartContextProvider>
+    </TokenContextProvider>
   );
 }
 

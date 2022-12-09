@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
-
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { TokenContext } from "../context/TokenContext";
 import { FooterText } from "../styles/signUp";
 import { TextField, Button, Typography, Stack, Box } from "@mui/material";
 
@@ -15,18 +13,20 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  const { setTokens } = useContext(TokenContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(errorDefault);
 
     const requestHeader = {
       method: "POST",
-      mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(input),
     };
-    console.log("input: ", input);
+    console.log("Login-input: ", input);
 
     try {
       const response = await fetch(
@@ -37,11 +37,15 @@ export default function Login() {
 
       switch (status) {
         case 200: //ok; login success
-          const data = await response.json();
-          //TODO store data..
-          console.log("200-data: ", data);
-          //   setInput(inputDefault);
-          //   navigate("/");
+          const { accessToken, refreshToken } = await response.json();
+
+          //store tokens
+          setTokens((prev) => {
+            console.log("logged in: ", { ...prev, accessToken, refreshToken });
+            return { ...prev, accessToken, refreshToken };
+          });
+          setInput(inputDefault);
+          navigate("/");
           break;
         case 404: //NOT_FOUND; Invalid email
           setError({ message: "Invalid email. Try again." });
