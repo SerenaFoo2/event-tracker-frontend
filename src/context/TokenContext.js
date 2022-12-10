@@ -1,17 +1,13 @@
 import { createContext, useState } from "react";
 
-export const CartContext = createContext();
+export const TokenContext = createContext();
 
-export const ExampleCartContextProvider = ({ children }) => {
-  const [cart, setCart] = useState({
-    items: [],
-    totalQuantity: 0,
-    totalPrice: 0,
-  });
+export const TokenContextProvider = ({ children }) => {
+  const [tokens, setTokens] = useState({ accessToken: "", refreshToken: "" });
   return (
-    <CartContext.Provider value={{ cart, setCart }}>
+    <TokenContext.Provider value={{ tokens, setTokens }}>
       {children}
-    </CartContext.Provider>
+    </TokenContext.Provider>
   );
 };
 
@@ -21,10 +17,10 @@ export const ExampleCartContextProvider = ({ children }) => {
 1. wrap <ExampleCartContextProvider> </ExampleCartContextProvider> to App, see index.js
 
 2. At anywhere of the component tree where you want to use "cart" or "setCart" : 
-import { CartContext } from "..../context/example_CartContext";
+import { TokenContext } from "..../context/example_CartContext";
 
 export default function AnyReactComponent() {
-  const { cart, setCart } = useContext(CartContext);
+  const { tokens, setTokens } = useContext(CartContext);
 
   return <div>test</div>
 }

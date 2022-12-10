@@ -3,11 +3,13 @@ import Home from "./pages/home";
 import CalenderMonth from "./pages/calenderMonth";
 import CalenderDay from "./pages/calenderDay";
 import Event from "./pages/event";
-import { ExampleCartContextProvider } from "./context/example_CartContext";
+import SignUp from "./pages/signUp";
+import Login from "./pages/login";
+import { TokenContextProvider } from "./context/TokenContext";
 
 function App() {
   return (
-    <ExampleCartContextProvider>
+    <TokenContextProvider>
       <Router>
         <Routes>
           <Route path="/">
@@ -15,10 +17,12 @@ function App() {
             <Route path="calenderMonth" element={<CalenderMonth />}></Route>
             <Route path="calenderDay" element={<CalenderDay />}></Route>
             <Route path="event" element={<Event />}></Route>
+            <Route path="signUp" element={<SignUp />}></Route>
+            <Route path="login" element={<Login />}></Route>
           </Route>
         </Routes>
       </Router>
-    </ExampleCartContextProvider>
+    </TokenContextProvider>
   );
 }
 
