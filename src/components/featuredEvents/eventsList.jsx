@@ -1,3 +1,13 @@
+import EventCard from "./eventCard";
+
+
 export default function EventsList() {
-  return <div>EventsList</div>;
+  return (
+  <>
+  <EventCard />
+  <EventCard />
+  <EventCard />
+  <EventCard />
+  </>
+    )
 }
