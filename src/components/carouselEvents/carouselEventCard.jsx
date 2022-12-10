@@ -1,3 +1,9 @@
 export default function CarouselEventCard() {
-  return <div>CarouselEventCard</div>;
+const events = [
+  "event 1",
+  "event 2",
+  "event 3"
+]
+
+  return events;
 }

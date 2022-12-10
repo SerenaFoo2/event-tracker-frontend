@@ -1,5 +1,10 @@
 // import { useEffect } from "react";
 import { tempDatabase } from "../temp_database";
+import { useEffect } from "react";
+import Box from '@mui/material/Box';
+import NavigationBar from "../components/navigationBar";
+import CarouselEvent from "../components/carouselEvents";
+import FeaturedEvents from "../components/featuredEvents";
 
 export default function Home() {
   /*  const requestHeader = {
@@ -13,11 +18,18 @@ export default function Home() {
       .catch((err) => console.log(err));
   }, []);*/
 
-  return (
-    <div>
-      Home Page
-      <br></br>
-      {tempDatabase[0].image_urls}
-    </div>
-  );
+  // return (
+  //   <div>
+  //     Home Page
+  //     <br></br>
+  //     {tempDatabase[0].image_urls}
+  //   </div>
+  // );
+  return ( 
+  <Box>
+    <NavigationBar />
+    <CarouselEvent />
+    <FeaturedEvents />
+    </Box>
+  )
 }
