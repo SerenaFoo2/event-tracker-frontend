@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import { TokenContext } from "../context/TokenContext";
+import { AuthContext } from "../context/authContext";
+import { getRequestHeader } from "../helper/auth-helper";
 import { FooterText } from "../styles/signUp";
 import { TextField, Button, Typography, Stack, Box } from "@mui/material";
 
@@ -13,42 +14,36 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const { setTokens } = useContext(TokenContext);
+  const { setTokens } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(errorDefault);
 
-    const requestHeader = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(input),
-    };
-    console.log("Login-input: ", input);
+    const requestHeader = getRequestHeader("POST", input);
 
     try {
+      // "http://localhost:4000/auth/login"
       const response = await fetch(
-        "http://localhost:4000/auth/login",
+        `${process.env.REACT_APP_API_URL}/auth/login`,
         requestHeader
       );
+
       const { status, statusText } = response;
 
       switch (status) {
         case 200: //ok; login success
           const { accessToken, refreshToken } = await response.json();
-
           //store tokens
           setTokens((prev) => {
-            console.log("logged in: ", { ...prev, accessToken, refreshToken });
+            console.log("Login, stored tokens. ");
             return { ...prev, accessToken, refreshToken };
           });
           setInput(inputDefault);
           navigate("/");
           break;
         case 404: //NOT_FOUND; Invalid email
-          setError({ message: "Invalid email. Try again." });
+          setError({ message: "Email not found. Try again." });
           break;
         case 403: //FORBIDDEN; Password mismatch.
           setError({ message: "Password mismatch. Try again." });
