@@ -19,7 +19,7 @@ export default function ImgMediaCard() {
         <Typography gutterBottom variant="h5" component="div">
           Pinocchio
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        {/* <Typography variant="body2" color="text.secondary">
        
 Wild Rice @ Funan
 In this cheekily on-the-nose musical adaptation of the classic fairy tale, Wild Rice brings one of the world’s most beloved characters to the Singapore stage. Meet Pinocchio, a wooden puppet crafted with loving care by Geppetto – a kind, humble carpenter who has always dreamt of becoming a father.
@@ -29,7 +29,7 @@ With a wish and a touch of fairy magic, Pinocchio springs to life… but there a
 Directed by Pam Oei, Pinocchio is a brand-new, original musical written by Thomas Lim, with lyrics by Joel Tan and music by Julian Wong. Our fabulous cast includes Mae Elliessa as Pinocchio, Ebi Shankara as Geppetto and Siti Khalijah Zainal as G-Hopper, as well as the adorable First Stage Kids – making a welcome return to the stage after three long years!
 
 A hilarious and heartwarming celebration of family, friendship and the importance of being true to yourself, Pinocchio is the perfect holiday treat for you and your loved ones. Wood we lie to you? 🤥
-        </Typography>
+        </Typography> */}
       </CardContent>
       <CardActions>
         <Button size="small">Share</Button>

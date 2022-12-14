@@ -1,6 +1,6 @@
 import { Box, Slide } from "@mui/material";
 import { useEffect, useState } from "react";
-import CarouselEventCard from "./carouselEventCard";
+import carouselEventCard from "./carouselEventCard";
 import {
   EventSlider,
   CarouselEventContainer,
@@ -15,7 +15,7 @@ import {
 
 
 export default function CarouselEvent() {
-  const [eventIndex, setEventIndex] = useState(0);
+  const [messageIndex, setMessageIndex] = useState(0);
   const [show, setShow] = useState(true);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function CarouselEvent() {
     }, 3000);
 
     const intervalId = setInterval(() => {
-      setEventIndex((i) => {return (i + 1) % messages.length});
+      setMessageIndex((i) => {return (i + 1) % messages.length});
       setShow(true);
 
 
@@ -32,21 +32,6 @@ export default function CarouselEvent() {
         setShow(false);
       }, 3000);
     }, 4000);
-
-
-  //   const intervalId = setInterval(() => {
-  //     setMessageIndex((i) => (i + 1) % messages.length);
-  //     setShow(true);
-
-  //     setTimeout(() => {
-  //       setShow(false);
-  //     }, 3000);
-  //   }, 4000);
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, []);
 
     return () => {
       clearInterval(intervalId);
@@ -61,9 +46,11 @@ export default function CarouselEvent() {
         timeout={{ enter: 500, exit: 100 }}
       >
         <Box display="flex" justifyContent="center" alignItems="center">
-          <EventSlider>{CarouselEventCard[eventIndex]}</EventSlider>
+          <EventSlider>{messages[messageIndex]}</EventSlider>
         </Box>
       </Slide>
     </CarouselEventContainer>
   );
 }
+
+//explore grid

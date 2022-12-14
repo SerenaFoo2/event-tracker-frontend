@@ -1,6 +1,6 @@
 import { Box, Slide } from "@mui/material";
 import { useEffect, useState } from "react";
-import CarouselEventCard from "./carouselEventCard";
+import carouselEventCard from "./carouselEventCard";
 import {
   EventSlider,
   CarouselEventContainer,
@@ -8,9 +8,9 @@ import {
 
 
     const messages = [
-      "10% off on your first order!",
-      "Singapore sale starts now, visit any store.",
-      "Additonal 20% off on second items!",
+      "Event 1",
+      "Event 2",
+      "Event 3",
     ];
 
 

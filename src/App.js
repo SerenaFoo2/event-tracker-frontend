@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Switch from "react-switch";
 import Home from "./pages/home";
 import CalendarMonth from "./pages/calendarMonth";
 import Event from "./pages/event";
