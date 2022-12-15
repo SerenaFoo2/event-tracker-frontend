@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getRequestHeader } from "../helper/auth-helper";
 import { TextField, Button, Typography, Stack, Box } from "@mui/material";
 import { FooterText } from "../styles/signUp";
 
@@ -16,21 +17,17 @@ export default function SignUp() {
     e.preventDefault();
     setError(errorDefault);
 
-    const requestHeader = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(input),
-    };
+    const requestHeader = getRequestHeader("POST", input);
+
     console.log("SignUp-input: ", input);
     try {
+      // "http://localhost:4000/auth/signup"
       const response = await fetch(
-        "http://localhost:4000/auth/signup",
+        `${process.env.REACT_APP_API_URL}/auth/signup`,
         requestHeader
       );
       const { status, statusText } = response;
-
+      console.log("signup-response: ", response);
       switch (status) {
         case 201: //created
           setInput(inputDefault);

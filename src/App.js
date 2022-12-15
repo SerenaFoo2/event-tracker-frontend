@@ -4,23 +4,33 @@ import CalendarMonth from "./pages/calendarMonth";
 import Event from "./pages/event";
 import SignUp from "./pages/signUp";
 import Login from "./pages/login";
-import { TokenContextProvider } from "./context/TokenContext";
+import { AuthContextProvider } from "./context/authContext";
+import ExamplefetchData from "./pages/examplefetchData";
+import MyEvents from "./pages/myEvents";
+import { UserContextProvider } from "./context/userContext";
+import { AllEventsContextProvider } from "./context/allEventsContext";
 
 function App() {
   return (
-    <TokenContextProvider>
-      <Router>
-        <Routes>
-          <Route path="/">
-            <Route index element={<Home />}></Route>
-            <Route path="calendarMonth" element={<CalendarMonth />}></Route>
-            <Route path="event" element={<Event />}></Route>
-            <Route path="signUp" element={<SignUp />}></Route>
-            <Route path="login" element={<Login />}></Route>
-          </Route>
-        </Routes>
-      </Router>
-    </TokenContextProvider>
+    <AuthContextProvider>
+      <AllEventsContextProvider>
+        <UserContextProvider>
+          <Router>
+            <Routes>
+              <Route path="/">
+                <Route index element={<Home />}></Route>
+                <Route path="calendarMonth" element={<CalendarMonth />}></Route>
+                <Route path="myEvents" element={<MyEvents />}></Route>
+                <Route path="event" element={<Event />}></Route>
+                <Route path="signUp" element={<SignUp />}></Route>
+                <Route path="login" element={<Login />}></Route>
+                <Route path="fetch" element={<ExamplefetchData />}></Route>
+              </Route>
+            </Routes>
+          </Router>
+        </UserContextProvider>
+      </AllEventsContextProvider>
+    </AuthContextProvider>
   );
 }
 

@@ -1,13 +1,16 @@
 import { createContext, useState } from "react";
 
-export const TokenContext = createContext();
+export const allEventsContext = createContext();
 
-export const TokenContextProvider = ({ children }) => {
-  const [tokens, setTokens] = useState({ accessToken: "", refreshToken: "" });
+export const AllEventsContextProvider = ({ children }) => {
+  const [allEvents, setAllEvents] = useState([]);
+
+  //TODO fetch all events on load.
+
   return (
-    <TokenContext.Provider value={{ tokens, setTokens }}>
+    <allEventsContext.Provider value={{ allEvents, setAllEvents }}>
       {children}
-    </TokenContext.Provider>
+    </allEventsContext.Provider>
   );
 };
 
@@ -17,7 +20,7 @@ export const TokenContextProvider = ({ children }) => {
 1. wrap <ExampleCartContextProvider> </ExampleCartContextProvider> to App, see index.js
 
 2. At anywhere of the component tree where you want to use "cart" or "setCart" : 
-import { TokenContext } from "..../context/example_CartContext";
+import { AuthContext } from "..../context/example_CartContext";
 
 export default function AnyReactComponent() {
   const { tokens, setTokens } = useContext(CartContext);
