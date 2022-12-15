@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import listPlugin from "@fullcalendar/list";
 import RemoveEventModal from "./removeEventModal";
 import { tempDatabase2 } from "../../temp_database2";
+import { Link } from "react-router-dom";
 
 export default function FullCalenderApp() {
   const calenderRef = useRef(null);
@@ -31,6 +32,7 @@ export default function FullCalenderApp() {
 
   return (
     <div>
+      <Link to="/">Back to Home Page</Link>
       <RemoveEventModal
         // open={selectedEvent.modalOpen}
         modalOpen={selectedEvent.modalOpen}

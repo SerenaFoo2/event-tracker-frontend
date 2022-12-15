@@ -16,7 +16,7 @@ export default function Login() {
 
   const { setTokens } = useContext(AuthContext);
 
-  const handleSubmit = async (e) => {
+  const handleSubmitLogin = async (e) => {
     e.preventDefault();
     setError(errorDefault);
 
@@ -76,7 +76,7 @@ export default function Login() {
       </Box>
 
       <Stack justifyContent="center" alignItems="center">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitLogin}>
           <Stack spacing={2} p={3} sx={{ width: 250 }}>
             <TextField
               inputProps={{ style: { fontSize: 14 } }}

@@ -53,7 +53,7 @@ export const AuthContextProvider = ({ children }) => {
         setTokens((prev) => {
           return { ...prev, accessToken: newAccessToken };
         });
-        console.log("fetched new accessToken ok.");
+        console.log("fetched new accessToken ok.", newAccessToken);
         return newAccessToken;
       }
       //scenario: any other error

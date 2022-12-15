@@ -1,12 +1,14 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import Button from "@mui/material/Button";
 import { getRequestHeader } from "../helper/auth-helper";
+import { Link } from "react-router-dom";
 
 export default function ExamplefetchData() {
   const { tokens, setTokens, getAuthRequestHeader } = useContext(AuthContext);
+  const [events, setEvents] = useState([]);
 
-  const handleClickSetTokens = async (e) => {
+  const handleClickLogin = async (e) => {
     e.preventDefault();
     const input = { email: "loo@hotmail.com", password: "abc" };
 
@@ -37,11 +39,11 @@ export default function ExamplefetchData() {
           throw Error(`${statusText}. Try again.`);
       }
     } catch (err) {
-      alert(`handleClickSetTokens Error: ${err}`);
+      alert(`handleClickLogin Error: ${err}`);
     }
   };
 
-  const handleClick = async (e) => {
+  const handleClickProtectedFetch = async (e) => {
     e.preventDefault();
 
     try {
@@ -73,18 +75,56 @@ export default function ExamplefetchData() {
     }
   };
 
+  const handleClickPublicFetch = async (e) => {
+    e.preventDefault();
+    const requestHeader = getRequestHeader("GET");
+    console.log("requestHeader ok.", requestHeader);
+
+    try {
+      //  http://localhost:4000/
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/events`,
+        requestHeader
+      );
+
+      const { status, statusText } = response;
+
+      if (status === 200) {
+        const data = await response.json();
+        setEvents(data);
+        console.log("fetch success: ", data);
+        return;
+      }
+      // any other errors
+      throw Error(`${statusText}`);
+    } catch (err) {
+      // any other errors
+      alert(`handleClick Error: ${err}`);
+    }
+  };
+
   return (
     <div>
+      <Link to="/">Return to Home Page</Link> <br></br>
       Example:fetch data from protected routes Page
-      <Button onClick={handleClick} variant="text">
-        Fetch Protected Route
+      <hr></hr>
+      <Button onClick={handleClickProtectedFetch} variant="outlined">
+        Protected Route Fetch "/"
       </Button>
-      <Button onClick={handleClickSetTokens} variant="text">
-        setTokens
+      <br></br>
+      <Button onClick={handleClickLogin} variant="outlined">
+        Login
       </Button>
+      <br></br>
       <div> accessToken: {tokens.accessToken}</div>
       <br></br>
       <div>refreshToken: {tokens.refreshToken}</div>
+      <hr></hr>
+      <Button onClick={handleClickPublicFetch} variant="outlined">
+        Public Route Fetch "/events"
+      </Button>
+      <hr></hr>
+      {/* {events && events[0]} */}
     </div>
   );
 }
