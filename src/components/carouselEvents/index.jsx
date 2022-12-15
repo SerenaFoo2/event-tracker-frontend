@@ -8,10 +8,33 @@ import {
 
 
     const messages = [
-      "Event 1",
-      "Event 2",
-      "Event 3",
-    ];
+      {
+        image: "/images/butterfly.jpg",
+        title: "The Butterfly Lovers",
+      },
+      {
+        image: "/images/hotel.jpg",
+        title: "Hotel",
+      },
+      {
+        image: "/images/inspector.jpg",
+        title: "An Inspector Calls",
+      },
+      {
+        image: "/images/monster.jpg",
+        title: "A Monster Calls",
+      },
+      {
+        image: "/images/pinocchio.jpg",
+        title: "Pinocchio",
+      },
+    ]
+
+    // const messages = [
+    //   "10% off on your first order!",
+    //   "Singapore sale starts now, visit any store.",
+    //   "Additonal 20% off on second items!",
+    // ];
 
 
 export default function CarouselEvent() {
@@ -46,11 +69,12 @@ export default function CarouselEvent() {
         timeout={{ enter: 500, exit: 100 }}
       >
         <Box display="flex" justifyContent="center" alignItems="center">
-          <EventSlider>{messages[messageIndex]}</EventSlider>
+          <EventSlider>{messages[messageIndex].image}</EventSlider>
         </Box>
       </Slide>
     </CarouselEventContainer>
   );
 }
 
-//explore grid
+
+// {tempDatabase[0].image_urls}

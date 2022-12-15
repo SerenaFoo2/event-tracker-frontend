@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { AppBar } from "@mui/material";
 import Toolbar from '@mui/material/Toolbar';
+import RightBar from "./RightBar";
 
 export default function NavigationBar() {
 
 
   return (
     <React.Fragment>
-      <AppBar position="fixed" color="secondary">
-        <Toolbar>
-          <Button variant="text">Home</Button>
-          <Button variant="text">My Events</Button>
-          <Button variant="text">Login/ Signup</Button>
+      <AppBar position="sticky" color="inherit" style={{backgroundColor: "#FF0000", color: "white", boxShadow: "0px 0px 0px 0px"}}>
+        <Toolbar >
+          <Button variant="text" style={{color:"white"}}>Home</Button>
+          <Button variant="text" style={{color:"white"}}>My Events</Button>
+          <RightBar >Login</RightBar>
         </Toolbar>
       </AppBar>
       <Toolbar />
