@@ -26,7 +26,9 @@ export default function FullCalenderApp() {
     console.log(eventClickInfo, "eventClick");
     console.log(tempDatabase2);
     // console.log("title", eventClickInfo.event.title);
+
     let calendarApi = calenderRef.current.getApi();
+    console.log(calendarApi.getEvents(), "calendarApi");
     console.log(calendarApi.getEvents()[6].extendedProps);
   }
 
@@ -53,6 +55,8 @@ export default function FullCalenderApp() {
           hour: "numeric",
           meridiem: "short",
         }}
+        // selectable={true}
+        // editable={true}
         ref={calenderRef}
         weekNumbers={true}
         navLinks={true} // can click day/week names to navigate views

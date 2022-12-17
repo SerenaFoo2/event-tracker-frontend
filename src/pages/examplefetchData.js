@@ -1,105 +1,106 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/authContext";
-import Button from "@mui/material/Button";
-import { getRequestHeader } from "../helper/auth-helper";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import httpStatus from "http-status";
+import Button from "@mui/material/Button";
 
 export default function ExamplefetchData() {
-  const { tokens, setTokens, getAuthRequestHeader } = useContext(AuthContext);
+  const { tokens, setTokens, axiosJWT } = useContext(AuthContext);
   const [events, setEvents] = useState([]);
+  const [error, setError] = useState("");
 
-  const handleClickLogin = async (e) => {
+  const handleClickLoginAxios = async (e) => {
     e.preventDefault();
-    const input = { email: "loo@hotmail.com", password: "abc" };
+    setError("");
+    const loginInfor = { email: "loo@hotmail.com", password: "abc" };
 
-    const requestHeader = getRequestHeader("POST", input);
     try {
-      // "http://localhost:4000/auth/login"
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/auth/login`,
-        requestHeader
+        loginInfor
       );
 
-      const { status, statusText } = response;
-
-      switch (status) {
-        case 200: //ok; login success
-          const { accessToken, refreshToken } = await response.json();
-          //store tokens
-          setTokens((prev) => {
-            console.log("setTokens ok!");
-            return { ...prev, accessToken, refreshToken };
-          });
-          break;
-        case 404: //NOT_FOUND; Invalid email
-          throw Error(`${statusText}. Invalid email.`);
-        case 403: //FORBIDDEN; Password mismatch.
-          throw Error(`${statusText}. Password mismatch.`);
-        default:
-          throw Error(`${statusText}. Try again.`);
+      console.log("tokens: ", response.data);
+      const { status, statusText, data } = response;
+      if (status === httpStatus.OK) {
+        const { accessToken, refreshToken } = data;
+        setTokens((prev) => {
+          return { ...prev, accessToken, refreshToken };
+        });
+        return;
       }
+      // any other errors
+      throw Error(`${statusText}`);
     } catch (err) {
-      alert(`handleClickLogin Error: ${err}`);
+      if (err.response) {
+        const { status, statusText } = err.response;
+        switch (status) {
+          case httpStatus.NOT_FOUND:
+            setError(`${statusText}. Invalid email.`);
+            break;
+          case httpStatus.FORBIDDEN:
+            setError(`${statusText}. Password mismatch.`);
+            break;
+          default:
+            setError(`${statusText}. Try again.`);
+        }
+        return;
+      }
+      setError(`${err}`);
     }
   };
 
-  const handleClickProtectedFetch = async (e) => {
+  const handleClickProtectedAxiosJWT = async (e) => {
     e.preventDefault();
-
+    setError("");
     try {
-      const requestHeader = await getAuthRequestHeader("GET");
-      console.log("requestHeader ok.", requestHeader);
+      const response = await axiosJWT.get(process.env.REACT_APP_API_URL);
+      const { status, statusText, data } = response;
 
-      // if requestHeader is false
-      if (!requestHeader)
-        throw Error("getAuthRequestHeader Error. Check if token is empty.");
-
-      //  http://localhost:4000/
-      const response = await fetch(
-        process.env.REACT_APP_API_URL,
-        requestHeader
-      );
-
-      const { status, statusText } = response;
-
-      if (status === 200) {
-        const data = await response.json();
-        console.log("fetch success: ", data);
+      if (status === httpStatus.OK) {
+        console.log("axios protected get success: ", data);
         return;
       }
       // any other errors
       throw Error(`${statusText}`);
     } catch (err) {
       // any other errors
-      alert(`handleClick Error: ${err}`);
+      if (err.response) {
+        const { status, statusText } = err.response;
+        switch (status) {
+          case httpStatus.UNAUTHORIZED:
+            setError(`${statusText}.`);
+            break;
+          default:
+            setError(`${statusText}.`);
+        }
+        return;
+      }
+      setError(`${err}`);
     }
   };
 
-  const handleClickPublicFetch = async (e) => {
+  const handleClickPublicAxios = async (e) => {
     e.preventDefault();
-    const requestHeader = getRequestHeader("GET");
-    console.log("requestHeader ok.", requestHeader);
 
     try {
-      //  http://localhost:4000/
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/events`,
-        requestHeader
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/events`
       );
 
-      const { status, statusText } = response;
+      const { status, statusText, data } = response;
 
       if (status === 200) {
-        const data = await response.json();
         setEvents(data);
-        console.log("fetch success: ", data);
+        console.log("axios public get success: ", data);
         return;
       }
       // any other errors
       throw Error(`${statusText}`);
     } catch (err) {
       // any other errors
-      alert(`handleClick Error: ${err}`);
+      setError(`${err}`);
     }
   };
 
@@ -108,23 +109,23 @@ export default function ExamplefetchData() {
       <Link to="/">Return to Home Page</Link> <br></br>
       Example:fetch data from protected routes Page
       <hr></hr>
-      <Button onClick={handleClickProtectedFetch} variant="outlined">
-        Protected Route Fetch "/"
+      <Button onClick={handleClickProtectedAxiosJWT} variant="outlined">
+        Protected Route AxiosJWT "/"
       </Button>
       <br></br>
-      <Button onClick={handleClickLogin} variant="outlined">
-        Login
+      <Button onClick={handleClickLoginAxios} variant="outlined">
+        Login Axios
       </Button>
+      <div>Error: {error}</div>
       <br></br>
       <div> accessToken: {tokens.accessToken}</div>
       <br></br>
       <div>refreshToken: {tokens.refreshToken}</div>
       <hr></hr>
-      <Button onClick={handleClickPublicFetch} variant="outlined">
-        Public Route Fetch "/events"
+      <Button onClick={handleClickPublicAxios} variant="outlined">
+        Public Route Axios "/events"
       </Button>
       <hr></hr>
-      {/* {events && events[0]} */}
     </div>
   );
 }

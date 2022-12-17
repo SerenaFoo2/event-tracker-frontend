@@ -1,58 +1,68 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getRequestHeader } from "../helper/auth-helper";
+import axios from "axios";
+import httpStatus from "http-status";
 import { TextField, Button, Typography, Stack, Box } from "@mui/material";
 import { FooterText } from "../styles/signUp";
 
 export default function SignUp() {
-  const inputDefault = { name: "", email: "", password: "" };
-  const errorDefault = { message: "" };
+  const inputInforDefault = { name: "", email: "", password: "" };
+  const errorDefault = "";
 
-  const [input, setInput] = useState(inputDefault);
+  const [inputInfor, setInputInfor] = useState(inputInforDefault);
   const [error, setError] = useState(errorDefault);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  /* onSubmitSignUp:
+      - if input infor do not conflict with db, store to db, then navigate to /login.
+      - else show error.  
+  */
+  const handleSubmitSignUp = async (e) => {
     e.preventDefault();
+
+    //reset error
     setError(errorDefault);
 
-    const requestHeader = getRequestHeader("POST", input);
-
-    console.log("SignUp-input: ", input);
+    console.log("SignUp-inputInfor: ", inputInfor);
     try {
-      // "http://localhost:4000/auth/signup"
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/auth/signup`,
-        requestHeader
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/users`,
+        inputInfor
       );
       const { status, statusText } = response;
-      console.log("signup-response: ", response);
-      switch (status) {
-        case 201: //created
-          setInput(inputDefault);
-          navigate("/login");
-          break;
-        case 409: //conflict data
-          const errMessage = await response.text();
-          setError({ message: errMessage });
-          break;
-        default:
-          setError({ message: `${statusText}. Try again.` });
-          break;
+
+      if (status === httpStatus.CREATED) {
+        setInputInfor(inputInforDefault);
+        return navigate("/login");
       }
+
+      throw Error(`${statusText}`);
     } catch (err) {
-      setError({ message: `${err}` });
+      if (err.response) {
+        const { status, statusText, data } = err.response;
+        switch (status) {
+          case httpStatus.CONFLICT:
+            setError(`${data}`);
+            break;
+          default:
+            setError(`${statusText}. Try again.`);
+            break;
+        }
+        return;
+      }
+
+      return setError(`${err}`);
     }
   };
-  const handleChange = (e) => {
+  const handleInputsChange = (e) => {
     const name = e.target.name;
 
     //clear error
     setError(errorDefault);
 
-    //update inputs
-    setInput((prev) => {
+    //update inputInfor
+    setInputInfor((prev) => {
       return { ...prev, [name]: e.target.value };
     });
   };
@@ -64,7 +74,7 @@ export default function SignUp() {
         <Typography variant="h6">Create Account</Typography>
       </Box>
       <Stack justifyContent="center" alignItems="center">
-        <Box component="form" onSubmit={handleSubmit}>
+        <Box component="form" onSubmit={handleSubmitSignUp}>
           <Stack spacing={2} p={3} sx={{ width: 250 }}>
             <TextField
               inputProps={{ style: { fontSize: 14 } }}
@@ -74,10 +84,10 @@ export default function SignUp() {
               label="Name"
               variant="outlined"
               name="name"
-              value={input.name}
+              value={inputInfor.name}
               required
               onChange={(e) => {
-                handleChange(e);
+                handleInputsChange(e);
               }}
             />
             <TextField
@@ -88,10 +98,10 @@ export default function SignUp() {
               label="Email"
               variant="outlined"
               name="email"
-              value={input.email}
+              value={inputInfor.email}
               required
               onChange={(e) => {
-                handleChange(e);
+                handleInputsChange(e);
               }}
             />
             <TextField
@@ -102,10 +112,10 @@ export default function SignUp() {
               label="Password"
               variant="outlined"
               name="password"
-              value={input.password}
+              value={inputInfor.password}
               required
               onChange={(e) => {
-                handleChange(e);
+                handleInputsChange(e);
               }}
             />
             <FooterText sx={{ textAlign: "left", fontSize: 10 }}>
@@ -116,9 +126,7 @@ export default function SignUp() {
               CREATE
             </Button>
 
-            {error.message && (
-              <FooterText sx={{ color: "red" }}>{error.message}</FooterText>
-            )}
+            {error && <FooterText sx={{ color: "red" }}>{error}</FooterText>}
           </Stack>
         </Box>
 
