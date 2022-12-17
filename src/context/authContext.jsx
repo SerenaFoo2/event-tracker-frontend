@@ -1,120 +1,95 @@
 import { createContext, useState } from "react";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [tokens, setTokens] = useState({ accessToken: "", refreshToken: "" });
 
-  /* check if tokens is valid:
-      - return accessToken:
-        - if accessToken is not expired.
-      - return false:
-        - if accessToken is "".
-        - if refreshToken is expired.
-        - any other uncaught error.
-  */
-  async function getAccessToken(tokens) {
-    const { accessToken, refreshToken } = tokens;
-
-    //scenario: accessToken is "".
-    if (!accessToken) {
-      console.log("accessToken is ''");
-      return false;
-    }
+  /* Get new accessToken using refreshToken   */
+  async function getNewToken() {
+    const authHeader = {
+      headers: { authorization: "Bearer " + tokens.refreshToken },
+    };
     try {
-      //scenario: accessToken is NOT "".
-      const currDate_seconds = Math.floor(Date.now() / 1000);
-      const accessToken_exp = jwt_decode(accessToken).exp;
-
-      //scenario: accessToken NOT expired.
-      if (currDate_seconds - accessToken_exp < 0) {
-        console.log("accessToken ok.");
-        return accessToken;
-      }
-
-      //scenario: Both accessToken and refreshToken expired.
-      const refreshToken_exp = jwt_decode(refreshToken).exp;
-      if (currDate_seconds - refreshToken_exp > 0) {
-        console.log("refreshToken Nok.");
-        return false;
-      }
-
-      //scenario: accessToken expired and refreshToken NOT expired.
-      //get new accessToken
-      //    "http://localhost:4000/auth/token"
-      const response = await fetch(
+      const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/auth/token`,
-        authRequestHeader("get", "", refreshToken)
+        authHeader
       );
-      if (response.status === 200) {
-        const { accessToken: newAccessToken } = await response.json();
-        // store updated accessToken
-        setTokens((prev) => {
-          return { ...prev, accessToken: newAccessToken };
-        });
-        console.log("fetched new accessToken ok.", newAccessToken);
-        return newAccessToken;
-      }
-      //scenario: any other error
-      console.log("getAccessToken other error.");
-      return false;
-      // return true;
+      setTokens((prev) => {
+        return { ...prev, accessToken: response.data.accessToken };
+      });
+      return response.data;
     } catch (err) {
-      //scenario: any other error
-      alert(`getAccessToken Error: ${err}`);
-      return false;
+      console.log(err);
     }
   }
 
-  /* check if accessToken is valid, :
-      - if valid, return reqHeader obj.
-      - if invalid, return false.
+  /* axiosJWT is meant to use with JWT to access protected routes. */
+  const axiosJWT = axios.create();
+
+  /* axiosJWT request interceptor check for tokens validity:
+      - if accessToken ok, append headers with token.
+      - if accessToken nok, get new Token and append headers with new token.
+      - if refreshToken nok, do nothing.
   */
-  async function getAuthRequestHeader(requestMethod, payloadObj = {}) {
-    try {
-      const accessToken = await getAccessToken(tokens);
-      console.log(" inside getAuthRequestHeader: ", accessToken);
-      //if accessToken is invalid.
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const { accessToken, refreshToken } = tokens;
+
+      // accessToken is ""
       if (!accessToken) {
-        return false;
+        return config;
       }
 
-      //if accessToken is valid
-      const reqHeader = authRequestHeader(
-        requestMethod,
-        payloadObj,
-        accessToken
+      // refreshToken has expired.
+      const currentDate_ms = Date.now();
+      const decodedRefreshToken_exp_ms = jwt_decode(refreshToken).exp * 1000;
+      if (decodedRefreshToken_exp_ms < currentDate_ms) {
+        return config;
+      }
+
+      const decodedAccessToken_exp_ms = jwt_decode(accessToken).exp * 1000;
+      console.log(
+        "decodedAccessToken_exp_ms - currentDate_ms",
+        decodedAccessToken_exp_ms - currentDate_ms
       );
-      return reqHeader;
-    } catch (err) {
-      alert(`getAuthRequestHeader Error: ${err}`);
-      return false;
+      console.log(
+        "decodedRefreshToken_exp_ms - currentDate_ms",
+        decodedRefreshToken_exp_ms - currentDate_ms
+      );
+      if (decodedAccessToken_exp_ms < currentDate_ms) {
+        // accessToken has expired.
+        const { accessToken: newAccessToken } = await getNewToken();
+        config.headers["authorization"] = "Bearer " + newAccessToken;
+        console.log("get newAccessToken ok!");
+      } else {
+        // accessToken has not expired.
+        config.headers["authorization"] = "Bearer " + accessToken;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+
+  /* axiosJWT response interceptor :
+      - display error message on error, for easier troubleshooting.
+  */
+  axiosJWT.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      console.log("interceptors.response-error: ", error);
+      return Promise.reject(error);
     }
-  }
+  );
 
   return (
-    <AuthContext.Provider value={{ tokens, setTokens, getAuthRequestHeader }}>
+    <AuthContext.Provider value={{ tokens, setTokens, axiosJWT }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
-/*return reqHeader obj for protected routes*/
-function authRequestHeader(requestMethod, payloadObj = {}, jwtoken = "") {
-  requestMethod = requestMethod.toLowerCase();
-
-  const reqHeader = {
-    method: requestMethod,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${jwtoken || ""}`,
-    },
-    //get method cannot have body.
-    body: requestMethod === "get" ? null : JSON.stringify(payloadObj),
-  };
-  return reqHeader;
-}
 
 //------to use the context--------//
 /*

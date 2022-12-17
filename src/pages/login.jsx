@@ -1,70 +1,86 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
-import { getRequestHeader } from "../helper/auth-helper";
-import { FooterText } from "../styles/signUp";
+import axios from "axios";
+import httpStatus from "http-status";
 import { TextField, Button, Typography, Stack, Box } from "@mui/material";
+import { FooterText } from "../styles/signUp";
 
 export default function Login() {
-  const inputDefault = { email: "", password: "" };
-  const errorDefault = { message: "" };
+  const loginInforDefault = { email: "", password: "" };
+  const errorDefault = "";
 
-  const [input, setInput] = useState(inputDefault);
+  const [loginInfor, setLoginInfor] = useState(loginInforDefault);
   const [error, setError] = useState(errorDefault);
 
   const navigate = useNavigate();
 
   const { setTokens } = useContext(AuthContext);
 
+  /* onSubmitLogin:
+      - if login infor are correct, navigate to home.
+      - else show error.  
+  */
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
+
+    //reset error
     setError(errorDefault);
 
-    const requestHeader = getRequestHeader("POST", input);
-
     try {
-      // "http://localhost:4000/auth/login"
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/auth/login`,
-        requestHeader
+        loginInfor
       );
 
       const { status, statusText } = response;
+      console.log("login response: ", response);
 
-      switch (status) {
-        case 200: //ok; login success
-          const { accessToken, refreshToken } = await response.json();
-          //store tokens
-          setTokens((prev) => {
-            console.log("Login, stored tokens. ");
-            return { ...prev, accessToken, refreshToken };
-          });
-          setInput(inputDefault);
-          navigate("/");
-          break;
-        case 404: //NOT_FOUND; Invalid email
-          setError({ message: "Email not found. Try again." });
-          break;
-        case 403: //FORBIDDEN; Password mismatch.
-          setError({ message: "Password mismatch. Try again." });
-          break;
-        default:
-          setError({ message: `${statusText}. Try again.` });
-          break;
+      if (status === httpStatus.OK) {
+        const { accessToken, refreshToken } = response.data; // await response.json();
+        //store tokens
+        setTokens((prev) => {
+          console.log("Login, stored tokens. ");
+          return { ...prev, accessToken, refreshToken };
+        });
+        //reset login Inputs
+        setLoginInfor(loginInforDefault);
+        return navigate("/");
       }
+
+      // any other errors
+      throw Error(`${statusText}`);
     } catch (err) {
-      setError({ message: `${err}` });
+      if (err.response) {
+        const { status, statusText } = err.response;
+        switch (status) {
+          case httpStatus.NOT_FOUND: //NOT_FOUND; Invalid email
+            setError(`${statusText}. Invalid email.`);
+            break;
+          case httpStatus.FORBIDDEN: //FORBIDDEN; Password mismatch.
+            setError(`${statusText}. Password mismatch.`);
+            break;
+          default:
+            setError(`${statusText}. Try again.`);
+        }
+        return;
+      }
+
+      return setError(`${err}`);
     }
   };
 
-  const handleChange = (e) => {
+  /* onInputsChange
+      - reset error, then setLoginInfor
+  */
+  const handleInputsChange = (e) => {
     const name = e.target.name;
 
     //clear error
     setError(errorDefault);
 
-    //update inputs
-    setInput((prev) => {
+    //update loginInfor
+    setLoginInfor((prev) => {
       return { ...prev, [name]: e.target.value };
     });
   };
@@ -86,10 +102,10 @@ export default function Login() {
               label="Email"
               variant="outlined"
               name="email"
-              value={input.email}
+              value={loginInfor.email}
               required
               onChange={(e) => {
-                handleChange(e);
+                handleInputsChange(e);
               }}
             />
             <TextField
@@ -100,19 +116,17 @@ export default function Login() {
               label="Password"
               variant="outlined"
               name="password"
-              value={input.password}
+              value={loginInfor.password}
               required
               onChange={(e) => {
-                handleChange(e);
+                handleInputsChange(e);
               }}
             />
             <Button variant="contained" type="submit" size="small">
               Login
             </Button>
 
-            {error.message && (
-              <FooterText sx={{ color: "red" }}>{error.message}</FooterText>
-            )}
+            {error && <FooterText sx={{ color: "red" }}>{error}</FooterText>}
           </Stack>
         </form>
 
