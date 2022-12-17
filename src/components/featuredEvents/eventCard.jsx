@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 export default function ImgMediaCard() {
   return (
@@ -32,8 +33,9 @@ A hilarious and heartwarming celebration of family, friendship and the importanc
         </Typography> */}
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+      <Button size="small">Learn More</Button>
+        <Button size="small" margin="right"><FavoriteBorderIcon/></Button>
+        
       </CardActions>
     </Card>
   );
