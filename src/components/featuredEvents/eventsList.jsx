@@ -1,10 +1,10 @@
 import EventCard from "./eventCard";
-import { useEffect, useContext } from "react";
-import { allEventsContext } from "../../context/allEventsContext";
-import { Grid, Box, Stack } from "@mui/material";
+// import { useContext } from "react";
+// import { AllEventsContext } from "../../context/allEventsContext";
+import { Grid, Stack } from "@mui/material";
 
 export default function EventsList() {
-  const { allEvents, setAllEvents, fetchData } = useContext(allEventsContext);
+  // const { allEvents, setAllEvents } = useContext(AllEventsContext);
 
   return (
     <Stack spacing={0} px={3} pb={6}>

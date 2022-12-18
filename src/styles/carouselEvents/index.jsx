@@ -1,4 +1,4 @@
-import { Grid, Box, styled, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 
 export const CarouselEventContainer = styled(Box)(({ theme }) => ({
   display: "flex",

@@ -1,7 +1,7 @@
-import Filter from "./filter";
-import EventCard from "./eventCard";
+// import Filter from "./filter";
+// import EventCard from "./eventCard";
 import EventsList from "./eventsList";
-import { Grid, Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Colors } from "../../styles/theme";
 
 export default function FeaturedEvents() {
@@ -11,11 +11,9 @@ export default function FeaturedEvents() {
         <Typography variant="h5" color={Colors.text}>
           Featured Events
         </Typography>
-
       </Box>
-      <Filter style="text-align:left" />
+      {/*  <Filter style="text-align:left" />   to Serena: this needs to be updated?*/}
       <EventsList />
     </Stack>
-
   );
 }
