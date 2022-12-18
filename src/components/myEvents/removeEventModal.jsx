@@ -28,9 +28,12 @@ export default function RemoveEventModal({
 
   /* remove selected event from calender and users/:id db. 
       - close modal.
-      - newSavedEvents: filtered selected event from savedEvents.
-      - newSavedEventsIds: mapped newSavedEvents to array of ids string.
-      - axiosJWT.put: update newSavedEventsIds to users/:id db
+      - if role = "user", 
+          - delete selectedEvent_id from users.savedEvents in db. 
+          - update userInfo
+      - if role = "admin", 
+          - delete selectedEvent_id from /events and all users.savedEvents in db.
+          - update userInfo and allEvents.
   */
   const handleRemoveEvent = async () => {
     // close modal.
@@ -41,33 +44,57 @@ export default function RemoveEventModal({
     // remove selectedEvent_id from savedEvents
     const eventObj = event.toPlainObject(); //convert to plain obj
     const selectedEvent_id = eventObj.extendedProps._id;
-    const newSavedEvents = userInfo.savedEvents.filter((event) => {
-      return event._id !== selectedEvent_id;
-    });
 
-    // map newSavedEvents to an array of ids string
-    const newSavedEventsIds = newSavedEvents.map((event) => {
-      return event._id;
-    });
-
-    // update newSavedEventsIds to users/:id db
     try {
-      const response = await axiosJWT.put(
-        `${process.env.REACT_APP_API_URL}/users/${userInfo.id}`,
-        { savedEvents: newSavedEventsIds }
-      );
+      /* if role: 
+          - "user", delete selectedEvent_id from users.savedEvents in db.
+          = "admin", delete selectedEvent_id from /events and all users.savedEvents in db.
+      */
+      if (userInfo.role !== "admin") {
+        const newSavedEvents = userInfo.savedEvents.filter((event) => {
+          return event._id !== selectedEvent_id;
+        });
 
-      const { status, statusText } = response;
-      if (status === httpStatus.OK) {
+        // map newSavedEvents to an array of ids string
+        const newSavedEventsIds = newSavedEvents.map((event) => {
+          return event._id;
+        });
+
+        // update newSavedEventsIds to users/:id db
+        const response = await axiosJWT.put(
+          `${process.env.REACT_APP_API_URL}/users/${userInfo.id}`,
+          { savedEvents: newSavedEventsIds }
+        );
+
+        if (response.status === httpStatus.OK) {
+          setUserInfo((prev) => {
+            return { ...prev, savedEvents: newSavedEvents };
+          });
+        }
+        return;
+      } else {
+      }
+
+      const response = await axiosJWT.delete(
+        `${process.env.REACT_APP_API_URL}/events/${selectedEvent_id}`
+      );
+      if (response.status === httpStatus.OK) {
+        // update setAllEvents
+        const newAllEvents = allEvents.filter((event) => {
+          return event._id !== selectedEvent_id;
+        });
+        setAllEvents(newAllEvents);
+
+        // update setUserInfo
+        const newSavedEvents = userInfo.savedEvents.filter((event) => {
+          return event._id !== selectedEvent_id;
+        });
         setUserInfo((prev) => {
           return { ...prev, savedEvents: newSavedEvents };
         });
+
         return;
       }
-
-      //TODO if Admin, delete selected event And all users holding that event.
-      // any other errors
-      throw Error(`${statusText}`);
     } catch (err) {
       console.log(err);
     }
