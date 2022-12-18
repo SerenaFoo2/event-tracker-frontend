@@ -6,36 +6,28 @@ import {
   CarouselEventContainer,
 } from "../../styles/carouselEvents";
 
-
-    const messages = [
-      {
-        image: "/images/butterfly.jpg",
-        title: "The Butterfly Lovers",
-      },
-      {
-        image: "/images/hotel.jpg",
-        title: "Hotel",
-      },
-      {
-        image: "/images/inspector.jpg",
-        title: "An Inspector Calls",
-      },
-      {
-        image: "/images/monster.jpg",
-        title: "A Monster Calls",
-      },
-      {
-        image: "/images/pinocchio.jpg",
-        title: "Pinocchio",
-      },
-    ]
-
-    // const messages = [
-    //   "10% off on your first order!",
-    //   "Singapore sale starts now, visit any store.",
-    //   "Additonal 20% off on second items!",
-    // ];
-
+const messages = [
+  {
+    image: "/images/butterfly.jpg",
+    title: "The Butterfly Lovers",
+  },
+  {
+    image: "/images/hotel.jpg",
+    title: "Hotel",
+  },
+  {
+    image: "/images/inspector.jpg",
+    title: "An Inspector Calls",
+  },
+  {
+    image: "/images/monster.jpg",
+    title: "A Monster Calls",
+  },
+  {
+    image: "/images/pinocchio.jpg",
+    title: "Pinocchio",
+  },
+];
 
 export default function CarouselEvent() {
   const [messageIndex, setMessageIndex] = useState(0);
@@ -47,9 +39,10 @@ export default function CarouselEvent() {
     }, 3000);
 
     const intervalId = setInterval(() => {
-      setMessageIndex((i) => {return (i + 1) % messages.length});
+      setMessageIndex((i) => {
+        return (i + 1) % messages.length;
+      });
       setShow(true);
-
 
       setTimeout(() => {
         setShow(false);
@@ -75,6 +68,3 @@ export default function CarouselEvent() {
     </CarouselEventContainer>
   );
 }
-
-
-// {tempDatabase[0].image_urls}

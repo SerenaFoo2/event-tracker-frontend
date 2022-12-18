@@ -8,12 +8,12 @@ export const CarouselEventContainer = styled(Box)(({ theme }) => ({
   height: "100%",
   padding: "0px",
   backgroundColor: "#000",
-    [theme.breakpoints.down("md")]: {
-      padding: "100px 100px",
-    },
-    [theme.breakpoints.down("sm")]: {
-      padding: "100px 100px",
-    },
+  [theme.breakpoints.down("md")]: {
+    padding: "100px 100px",
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: "100px 100px",
+  },
 }));
 
 export const EventSlider = styled(Typography)(({ theme }) => ({
