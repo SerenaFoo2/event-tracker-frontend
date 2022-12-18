@@ -5,9 +5,10 @@ import axios from "axios";
 import httpStatus from "http-status";
 import { TextField, Button, Typography, Stack, Box } from "@mui/material";
 import { FooterText } from "../styles/signUp";
+import { UserContext } from "../context/userContext";
 
 export default function Login() {
-  const loginInforDefault = { email: "", password: "" };
+  const loginInforDefault = { email: "loo@hotmail.com", password: "abc" }; //! for debugging only.
   const errorDefault = "";
 
   const [loginInfor, setLoginInfor] = useState(loginInforDefault);
@@ -16,9 +17,10 @@ export default function Login() {
   const navigate = useNavigate();
 
   const { setTokens } = useContext(AuthContext);
+  const { setUserInfo } = useContext(UserContext);
 
   /* onSubmitLogin:
-      - if login infor are correct, navigate to home.
+      - if login infor are correct, update context for setTokens and setUserInfo.
       - else show error.  
   */
   const handleSubmitLogin = async (e) => {
@@ -28,28 +30,36 @@ export default function Login() {
     setError(errorDefault);
 
     try {
-      const response = await axios.post(
+      const loginResponse = await axios.post(
         `${process.env.REACT_APP_API_URL}/auth/login`,
         loginInfor
       );
 
-      const { status, statusText } = response;
-      console.log("login response: ", response);
+      if (loginResponse.status === httpStatus.OK) {
+        const { accessToken, refreshToken, user } = loginResponse.data;
+        const { _id, name, role, savedEvents } = user;
 
-      if (status === httpStatus.OK) {
-        const { accessToken, refreshToken } = response.data; // await response.json();
         //store tokens
         setTokens((prev) => {
-          console.log("Login, stored tokens. ");
           return { ...prev, accessToken, refreshToken };
         });
         //reset login Inputs
         setLoginInfor(loginInforDefault);
+
+        setUserInfo((prev) => {
+          console.log("Login, setUserInfo():", {
+            id: _id,
+            name,
+            role,
+            savedEvents,
+          });
+          return { ...prev, id: _id, name, role, savedEvents };
+        });
         return navigate("/");
       }
 
-      // any other errors
-      throw Error(`${statusText}`);
+      // any other error
+      throw Error(`${loginResponse.statusText}`);
     } catch (err) {
       if (err.response) {
         const { status, statusText } = err.response;

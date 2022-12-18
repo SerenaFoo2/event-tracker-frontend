@@ -1,17 +1,22 @@
 import { createContext, useState } from "react";
 
-export const userContext = createContext();
+export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-  const defaultUserInfo = { id: "", name: "", role: "", events: [] };
+  const defaultUserInfo = {
+    id: "",
+    name: "",
+    role: "",
+    savedEvents: [],
+  };
   const [userInfo, setUserInfo] = useState(defaultUserInfo);
 
   //TODO fetch all events on load.
 
   return (
-    <userContext.Provider value={{ userInfo, setUserInfo }}>
+    <UserContext.Provider value={{ userInfo, setUserInfo }}>
       {children}
-    </userContext.Provider>
+    </UserContext.Provider>
   );
 };
 

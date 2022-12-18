@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-export const allEventsContext = createContext();
+export const AllEventsContext = createContext();
 
 export const AllEventsContextProvider = ({ children }) => {
   const [allEvents, setAllEvents] = useState([]);
@@ -8,9 +8,9 @@ export const AllEventsContextProvider = ({ children }) => {
   //TODO fetch all events on load.
 
   return (
-    <allEventsContext.Provider value={{ allEvents, setAllEvents }}>
+    <AllEventsContext.Provider value={{ allEvents, setAllEvents }}>
       {children}
-    </allEventsContext.Provider>
+    </AllEventsContext.Provider>
   );
 };
 

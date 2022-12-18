@@ -1,13 +1,14 @@
+import { useRef, useState, useContext } from "react";
+import RemoveEventModal from "./removeEventModal";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
+import { AllEventsContext } from "../../context/allEventsContext";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-// import { formatDate } from "@fullcalendar/react";
-import { useRef, useState } from "react";
+
 import listPlugin from "@fullcalendar/list";
-import RemoveEventModal from "./removeEventModal";
-import { tempDatabase2 } from "../../temp_database2";
-import { Link } from "react-router-dom";
 
 export default function FullCalenderApp() {
   const calenderRef = useRef(null);
@@ -19,49 +20,72 @@ export default function FullCalenderApp() {
   };
   const [selectedEvent, setSelectedEvent] = useState(defaultSelectedEvent);
 
+  const { role, savedEvents } = useContext(UserContext).userInfo;
+  const { allEvents, setAllEvents } = useContext(AllEventsContext);
+
   function handleEventClick(eventClickInfo) {
+    // open modal and update "selectedEvent" state used in <RemoveEventModal>
     setSelectedEvent((prev) => {
       return { ...prev, modalOpen: true, event: eventClickInfo.event };
     });
-    console.log(eventClickInfo, "eventClick");
-    console.log(tempDatabase2);
-    // console.log("title", eventClickInfo.event.title);
-
-    let calendarApi = calenderRef.current.getApi();
-    console.log(calendarApi.getEvents(), "calendarApi");
-    console.log(calendarApi.getEvents()[6].extendedProps);
+    // console.log("eventClick: ", eventClickInfo);
+    // let calendarApi = calenderRef.current.getApi();
+    // console.log(calendarApi.getEvents(), "calendarApi");
   }
 
   return (
     <div>
       <Link to="/">Back to Home Page</Link>
+
       <RemoveEventModal
-        // open={selectedEvent.modalOpen}
         modalOpen={selectedEvent.modalOpen}
-        // setOpen={setOpen}
         event={selectedEvent.event}
         setSelectedEvent={setSelectedEvent}
       />
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
         initialView="dayGridMonth"
+        customButtons={{
+          addEventButton: {
+            text: "Add Event",
+            // click: () => console.log("new event"),
+          },
+        }}
         headerToolbar={{
           left: "prev,next today",
           center: `title`,
-          right: `dayGridMonth,timeGridWeek,timeGridDay,listWeek newButton`,
+          right: `${
+            role === "admin"
+              ? "addEventButton dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+              : "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+          }`,
         }}
-        events={[...events, ...tempDatabase2]}
+        events={role === "admin" ? allEvents : savedEvents}
         eventTimeFormat={{
           hour: "numeric",
           meridiem: "short",
         }}
-        // selectable={true}
-        // editable={true}
         ref={calenderRef}
         weekNumbers={true}
         navLinks={true} // can click day/week names to navigate views
-        eventClick={handleEventClick}
+        eventClick={handleEventClick} //TODO for admin mode, make it delete event from /events
         nowIndicator={true}
+        selectable={role === "admin" ? true : false}
+        select={(selectionInfo) => {
+          const newStartDate = selectionInfo.startStr;
+          const newEndDate = selectionInfo.endStr;
+          console.log("selectionInfo: ", selectionInfo);
+          console.log("newStartDate, newEndDate", newStartDate, newEndDate);
+        }} //!admin mode only, select a range of date/days // controlled by "editable"
+        editable={role === "admin" ? true : false}
+        eventChange={(changeInfo) => {
+          //!admin mode only.
+          const newStartDate = changeInfo.event.startStr;
+          const newEndDate = changeInfo.event.endStr;
+          console.log("some event has changed.", changeInfo);
+          console.log("newStartDate, newEndDate", newStartDate, newEndDate);
+          changeInfo.revert(); //revert back to original.
+        }} // controlled by "editable"
       ></FullCalendar>
     </div>
   );

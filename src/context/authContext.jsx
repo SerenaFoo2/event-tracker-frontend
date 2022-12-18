@@ -51,14 +51,14 @@ export const AuthContextProvider = ({ children }) => {
       }
 
       const decodedAccessToken_exp_ms = jwt_decode(accessToken).exp * 1000;
-      console.log(
-        "decodedAccessToken_exp_ms - currentDate_ms",
-        decodedAccessToken_exp_ms - currentDate_ms
-      );
-      console.log(
-        "decodedRefreshToken_exp_ms - currentDate_ms",
-        decodedRefreshToken_exp_ms - currentDate_ms
-      );
+      // console.log(
+      //   "decodedAccessToken_exp_ms - currentDate_ms",
+      //   decodedAccessToken_exp_ms - currentDate_ms
+      // );
+      // console.log(
+      //   "decodedRefreshToken_exp_ms - currentDate_ms",
+      //   decodedRefreshToken_exp_ms - currentDate_ms
+      // );
       if (decodedAccessToken_exp_ms < currentDate_ms) {
         // accessToken has expired.
         const { accessToken: newAccessToken } = await getNewToken();
