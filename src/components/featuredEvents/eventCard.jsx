@@ -84,8 +84,7 @@ export default function ImgMediaCard({ event }) {
         </CardContent>
         <CardActions>
           <Button size="small">Learn More</Button>
-          {userInfo.role === "user" ? displayFavoriteButton() : "user' only"}
-          {/* //! change back to ===  */}
+          {userInfo.role === "user" ? displayFavoriteButton() : ""}
         </CardActions>
       </Card>
     </>

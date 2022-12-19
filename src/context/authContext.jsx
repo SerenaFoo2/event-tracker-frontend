@@ -4,8 +4,10 @@ import axios from "axios";
 
 export const AuthContext = createContext();
 
+export const defaultTokens = { accessToken: "", refreshToken: "" };
+
 export const AuthContextProvider = ({ children }) => {
-  const [tokens, setTokens] = useState({ accessToken: "", refreshToken: "" });
+  const [tokens, setTokens] = useState(defaultTokens);
 
   /* Get new accessToken using refreshToken   */
   async function getNewToken() {
@@ -90,19 +92,3 @@ export const AuthContextProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-//------to use the context--------//
-/*
-0. create a react component like above.
-1. wrap <ExampleCartContextProvider> </ExampleCartContextProvider> to App, see index.js
-
-2. At anywhere of the component tree where you want to use "cart" or "setCart" : 
-import { AuthContext } from "..../context/example_CartContext";
-
-export default function AnyReactComponent() {
-  const { tokens, setTokens } = useContext(CartContext);
-
-  return <div>test</div>
-}
-
-*/
