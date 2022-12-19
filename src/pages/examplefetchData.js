@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 
 export default function ExamplefetchData() {
   const { tokens, setTokens, axiosJWT } = useContext(AuthContext);
-  const [events, setEvents] = useState([]);
+  const [setEvents] = useState([]);
   const [error, setError] = useState("");
 
   const handleClickLoginAxios = async (e) => {
