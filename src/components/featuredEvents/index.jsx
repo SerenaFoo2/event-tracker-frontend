@@ -11,11 +11,9 @@ export default function FeaturedEvents() {
         <Typography variant="h5" color={Colors.text}>
           Featured Events
         </Typography>
-
       </Box>
       <Filter style="text-align:left" />
       <EventsList />
     </Stack>
-
   );
 }

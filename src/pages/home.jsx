@@ -1,35 +1,42 @@
-// import { useEffect } from "react";
-import { tempDatabase } from "../temp_database";
-import { useEffect } from "react";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 import NavigationBar from "../components/navigationBar";
 import CarouselEvent from "../components/carouselEvents";
 import FeaturedEvents from "../components/featuredEvents";
+import { carouselEventCard } from "../components/carouselEvents/carouselEventCard";
+import { AllEventsContext } from "../context/allEventsContext";
+import { useEffect, useContext } from "react";
+import axios from "axios";
+import httpStatus from "http-status";
 
 export default function Home() {
-  /*  const requestHeader = {
-    method: "GET",
-    mode: "cors",
-  };
-  useEffect(() => {
-    fetch("http://localhost:4000/", requestHeader)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-  }, []);*/
+  const { setAllEvents, allEvents } = useContext(AllEventsContext);
 
-  // return (
-  //   <div>
-  //     Home Page
-  //     <br></br>
-  //     {tempDatabase[0].image_urls}
-  //   </div>
-  // );
-  return ( 
-  <Box>
-    <NavigationBar />
-    <CarouselEvent />
-    <FeaturedEvents />
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const allEventsResponse = await axios.get(
+          `${process.env.REACT_APP_API_URL}/events`
+        );
+        if (allEventsResponse.status === httpStatus.OK) {
+          setAllEvents((prev) => {
+            return [...allEventsResponse.data];
+          });
+          console.log("AllEvents loaded: ", [...allEventsResponse.data]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (!allEvents.length) {
+      fetchData();
+    }
+  }, []);
+
+  return (
+    <Box>
+      <NavigationBar />
+      <CarouselEvent images={carouselEventCard} />
+      <FeaturedEvents />
     </Box>
-  )
+  );
 }

@@ -15,19 +15,24 @@ function App() {
     <AuthContextProvider>
       <AllEventsContextProvider>
         <UserContextProvider>
-          <Router>
-            <Routes>
-              <Route path="/">
-                <Route index element={<Home />}></Route>
-                <Route path="calendarMonth" element={<CalendarMonth />}></Route>
-                <Route path="myEvents" element={<MyEvents />}></Route>
-                <Route path="event" element={<Event />}></Route>
-                <Route path="signUp" element={<SignUp />}></Route>
-                <Route path="login" element={<Login />}></Route>
-                <Route path="fetch" element={<ExamplefetchData />}></Route>
-              </Route>
-            </Routes>
-          </Router>
+          <AllEventsContextProvider>
+            <Router>
+              <Routes>
+                <Route path="/">
+                  <Route index element={<Home />}></Route>
+                  <Route
+                    path="calendarMonth"
+                    element={<CalendarMonth />}
+                  ></Route>
+                  <Route path="myEvents" element={<MyEvents />}></Route>
+                  <Route path="event" element={<Event />}></Route>
+                  <Route path="signUp" element={<SignUp />}></Route>
+                  <Route path="login" element={<Login />}></Route>
+                  <Route path="fetch" element={<ExamplefetchData />}></Route>
+                </Route>
+              </Routes>
+            </Router>
+          </AllEventsContextProvider>
         </UserContextProvider>
       </AllEventsContextProvider>
     </AuthContextProvider>

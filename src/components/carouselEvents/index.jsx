@@ -1,6 +1,6 @@
 import { Box, Slide } from "@mui/material";
 import { useEffect, useState } from "react";
-import carouselEventCard from "./carouselEventCard";
+// import carouselEventCard from "./carouselEventCard";
 import {
   EventSlider,
   CarouselEventContainer,
