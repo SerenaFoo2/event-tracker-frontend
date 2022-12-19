@@ -1,17 +1,14 @@
 import { createContext, useState } from "react";
 
-export const allEventsContext = createContext();
+export const AllEventsContext = createContext();
 
 export const AllEventsContextProvider = ({ children }) => {
   const [allEvents, setAllEvents] = useState([]);
-  const [fetchData, setFetchData] = useState(true);
-
-  //TODO fetch all events on load.
 
   return (
-    <allEventsContext.Provider value={{ allEvents, setAllEvents, fetchData, setFetchData }}>
+    <AllEventsContext.Provider value={{ allEvents, setAllEvents }}>
       {children}
-    </allEventsContext.Provider>
+    </AllEventsContext.Provider>
   );
 };
 
