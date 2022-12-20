@@ -1,46 +1,40 @@
 import { Box, Slide } from "@mui/material";
-import { useEffect, useState } from "react";
-// import carouselEventCard from "./carouselEventCard";
+import { useEffect, useState, useContext } from "react";
+import { AllEventsContext } from "../../context/allEventsContext";
+
 import {
   EventSlider,
   CarouselEventContainer,
 } from "../../styles/carouselEvents";
 
-const messages = [
-  {
-    image: "/images/butterfly.jpg",
-    title: "The Butterfly Lovers",
-  },
-  {
-    image: "/images/hotel.jpg",
-    title: "Hotel",
-  },
-  {
-    image: "/images/inspector.jpg",
-    title: "An Inspector Calls",
-  },
-  {
-    image: "/images/monster.jpg",
-    title: "A Monster Calls",
-  },
-  {
-    image: "/images/pinocchio.jpg",
-    title: "Pinocchio",
-  },
-];
-
 export default function CarouselEvent() {
-  const [messageIndex, setMessageIndex] = useState(0);
+  const [eventIndex, setEventIndex] = useState(0);
   const [show, setShow] = useState(true);
+  const { allEvents } = useContext(AllEventsContext);
+  const [featuredEvents, setFeaturedEvents] = useState([]);
+
+  function featuredCards() {
+    if (allEvents[0]) {
+      const allfeaturedCards = allEvents.filter((event) => {
+        return event.is_featured === true;
+      });
+      setFeaturedEvents(allfeaturedCards);
+    }
+  }
+
+  console.log(allEvents[0] && allEvents?.image_urls);
 
   useEffect(() => {
     setTimeout(() => {
       setShow(false);
     }, 3000);
 
+    console.log(allEvents && allEvents?.image_urls);
+
     const intervalId = setInterval(() => {
-      setMessageIndex((i) => {
-        return (i + 1) % messages.length;
+      setEventIndex((i) => {
+        console.log(i, allEvents.length);
+        return (i + 1) % (allEvents.length > 0 ? allEvents.length : 0);
       });
       setShow(true);
 
@@ -53,16 +47,23 @@ export default function CarouselEvent() {
       clearInterval(intervalId);
     };
   }, []);
+  // console.log(allEvents && allEvents[0].image_urls);
 
   return (
     <CarouselEventContainer>
+      {/* {allEvents && setFeaturedEvents()} */}
       <Slide
         direction={show ? "left" : "right"}
         in={show}
         timeout={{ enter: 500, exit: 100 }}
       >
         <Box display="flex" justifyContent="center" alignItems="center">
-          <EventSlider>{messages[messageIndex].image}</EventSlider>
+          <EventSlider>
+            <img
+              src={allEvents && allEvents[eventIndex]?.image_urls}
+              alt="pic"
+            />
+          </EventSlider>
         </Box>
       </Slide>
     </CarouselEventContainer>

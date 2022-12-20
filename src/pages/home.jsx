@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import NavigationBar from "../components/navigationBar";
 import CarouselEvent from "../components/carouselEvents";
 import FeaturedEvents from "../components/featuredEvents";
-import { carouselEventCard } from "../components/carouselEvents/carouselEventCard";
 
 export default function Home() {
   const { setAllEvents } = useContext(AllEventsContext);
