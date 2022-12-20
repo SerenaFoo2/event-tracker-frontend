@@ -18,7 +18,8 @@ export default function LogoutIconButton() {
   return (
     <IconButton aria-label="logout" onClick={handleClickLogout}>
       <AccountCircleIcon
-        sx={{ fontSize: { xs: "1.4rem", sm: "1.4rem", md: "1.5rem" } }}
+        sx={{ fontSize: "1.5rem" }}
+        // { xs: "1.4rem", sm: "1.4rem", md: "1.5rem" }
       />
       <NavText>Logout</NavText>
     </IconButton>
