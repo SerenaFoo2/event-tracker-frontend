@@ -7,6 +7,7 @@ import ExamplefetchData from "./pages/examplefetchData";
 import MyEvents from "./pages/myEvents";
 import { UserContextProvider } from "./context/userContext";
 import { AllEventsContextProvider } from "./context/allEventsContext";
+import CreateEventForm from "./components/myEvents/createEventForm";
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
                 <Route path="myEvents" element={<MyEvents />}></Route>
                 <Route path="signUp" element={<SignUp />}></Route>
                 <Route path="login" element={<Login />}></Route>
+                <Route
+                  path="createEventForm"
+                  element={<CreateEventForm />}
+                ></Route>
                 <Route path="fetch" element={<ExamplefetchData />}></Route>
               </Route>
             </Routes>

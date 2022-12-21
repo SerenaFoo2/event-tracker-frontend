@@ -41,7 +41,7 @@ const eventdata = [
     description:
       "Fall. 1964.The Bronx. 12-year-old Donald is the first ever Black student at St. Nicholas Church School. Father Flynn, the popular parish priest, takes the boy under his wing, but the imperious school principal Sister Aloysius is mistrustful of Flynn’s intentions and begins to suspect him of sexual misconduct. As accusations and confrontations escalate, naïve young Sister James is caught in the crossfire, and the scandal takes on a whole new dimension when the boy’s mother steps into the fray. This conflict of conviction, credibility, and culture unearths troubling questions of faith, truth, and morality, as everyone’s fate hangs in the balance. Meanwhile, a 12-year-old boy waits in silence... This powerful and shattering play is more relevant and urgent than ever, adapted into an Oscar-nominated film starring Meryl Streep and Philip Seymour Hoffman. It challenges us to reflect on our supposed morals, question our faith, and dares us to doubt our long-held beliefs.",
     image_urls:
-      "https://static.sistic.com.sg/sistic/docroot/sites/default/files/2022-11/INSP22-1194x556.jpg",
+      "https://pangdemonium.com/images/events-details/2023/Doubt/Doubt-21x9.jpg",
     arts_groups: "Pangdemonium!",
     price: 30,
   },

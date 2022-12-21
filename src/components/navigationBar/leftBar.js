@@ -12,18 +12,17 @@ export default function LeftBar() {
     <LeftContainer>
       <NavReactLink to="/">
         <Stack direction="row" alignItems="center" gap="5px" px={0} py={2}>
-          <EmojiEmotionsIcon
-            color="primary"
-            sx={{ fontSize: { xs: "1.6rem", sm: "1.8rem", md: "2rem" } }}
-          />
-          <NavLogoText sx={{ display: { xs: "none", sm: "block" } }}>
-            My Events
-          </NavLogoText>
+          <EmojiEmotionsIcon color="primary" sx={{ fontSize: "2rem" }} />
+          {/* { xs: "1.6rem", sm: "1.8rem", md: "2rem" } */}
+          <NavLogoText sx={{ display: "block" }}>My Events</NavLogoText>
+          {/* { xs: "none", sm: "block" } */}
         </Stack>
       </NavReactLink>
 
-      <Stack direction="row" sx={{ gap: { xs: "0", sm: "40px" } }}>
-        <NavReactLink to="/" sx={{ display: { xs: "none", sm: "flex" } }}>
+      <Stack direction="row" sx={{ gap: "40px" }}>
+        {/* { xs: "0", sm: "40px" } */}
+        <NavReactLink to="/" sx={{ display: "flex" }}>
+          {/* { xs: "none", sm: "flex" } */}
           <NavText>Home</NavText>
         </NavReactLink>
         <NavReactLink to="/myEvents">

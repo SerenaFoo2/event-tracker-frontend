@@ -1,14 +1,14 @@
 import { useRef, useState, useContext } from "react";
 import RemoveEventModal from "./removeEventModal";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { AllEventsContext } from "../../context/allEventsContext";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-
 import listPlugin from "@fullcalendar/list";
+import UpdateEventDateModal from "./updateEventDateModal";
 
 export default function FullCalenderApp() {
   const calenderRef = useRef(null);
@@ -18,29 +18,59 @@ export default function FullCalenderApp() {
     event: {},
     modalOpen: false,
   };
+
+  const defaultNewEventDates = {
+    changeInfo: "",
+    modalOpen: false,
+  };
+
   const [selectedEvent, setSelectedEvent] = useState(defaultSelectedEvent);
+  const [newEventDates, setNewEventDates] = useState(defaultNewEventDates);
 
   const { role, savedEvents } = useContext(UserContext).userInfo;
-  const { allEvents, setAllEvents } = useContext(AllEventsContext);
+  const { allEvents } = useContext(AllEventsContext);
 
+  const navigate = useNavigate();
+
+  // open modal for <RemoveEventModal>
   function handleEventClick(eventClickInfo) {
-    // open modal and update "selectedEvent" state used in <RemoveEventModal>
     setSelectedEvent((prev) => {
       return { ...prev, modalOpen: true, event: eventClickInfo.event };
     });
-    // console.log("eventClick: ", eventClickInfo);
     // let calendarApi = calenderRef.current.getApi();
     // console.log(calendarApi.getEvents(), "calendarApi");
   }
 
+  // open modal for <UpdateEventDateModal>
+  function handleEventDateChange(changeInfo) {
+    setNewEventDates((prev) => {
+      return {
+        ...prev,
+        modalOpen: true,
+        changeInfo: changeInfo,
+      };
+    });
+  }
+
+  // function handleNewDatesSelection(selectionInfo) {
+  //   const newStartDateTime = selectionInfo.startStr;
+  //   const newEndDateTime = selectionInfo.endStr;
+  //   console.log("selectionInfo: ", selectionInfo);
+  //   console.log("newStartDate: ", newStartDateTime, typeof newStartDateTime);
+  //   console.log("newEndDate: ", newEndDateTime, typeof newEndDateTime);
+  // }
+
   return (
     <div>
-      <Link to="/">Back to Home Page</Link>
-
       <RemoveEventModal
         modalOpen={selectedEvent.modalOpen}
         event={selectedEvent.event}
         setSelectedEvent={setSelectedEvent}
+      />
+      <UpdateEventDateModal
+        modalOpen={newEventDates.modalOpen}
+        changeInfo={newEventDates.changeInfo}
+        setNewEventDates={setNewEventDates}
       />
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
@@ -48,7 +78,9 @@ export default function FullCalenderApp() {
         customButtons={{
           addEventButton: {
             text: "Add Event",
-            // click: () => console.log("new event"),
+            click: () => {
+              navigate("/createEventForm");
+            },
           },
         }}
         headerToolbar={{
@@ -67,58 +99,14 @@ export default function FullCalenderApp() {
         }}
         ref={calenderRef}
         weekNumbers={true}
-        navLinks={true} // can click day/week names to navigate views
+        navLinks={true} // allows to click day/week names to navigate views
         eventClick={handleEventClick} //TODO for admin mode, make it delete event from /events
         nowIndicator={true}
-        selectable={role === "admin" ? true : false}
-        select={(selectionInfo) => {
-          const newStartDate = selectionInfo.startStr;
-          const newEndDate = selectionInfo.endStr;
-          console.log("selectionInfo: ", selectionInfo);
-          console.log("newStartDate, newEndDate", newStartDate, newEndDate);
-        }} //!admin mode only, select a range of date/days // controlled by "editable"
+        // selectable={role === "admin" ? true : false}
+        // select={handleNewDatesSelection}  // select a range of date/days, controlled by "selectable"
         editable={role === "admin" ? true : false}
-        eventChange={(changeInfo) => {
-          //!admin mode only.
-          const newStartDate = changeInfo.event.startStr;
-          const newEndDate = changeInfo.event.endStr;
-          console.log("some event has changed.", changeInfo);
-          console.log("newStartDate, newEndDate", newStartDate, newEndDate);
-          changeInfo.revert(); //revert back to original.
-        }} // controlled by "editable"
+        eventChange={handleEventDateChange} // controlled by "editable"
       ></FullCalendar>
     </div>
   );
 }
-
-const events = [
-  {
-    id: 1,
-    title: "event 1",
-    start: "2022-12-12T10:00:00",
-    end: "2022-12-12T12:00:00",
-    // textColor: "pink",
-    // backgroundColor: "yellow",
-    // borderColor: "green",
-    // display: "list-item",
-    // url: "www.gg.com", // when click is equals to http://localhost:3000/www.gg.com
-  },
-  {
-    id: 2,
-    title: "event 2",
-    start: "2022-12-15T13:00:00",
-    end: "2022-12-15T18:00:00",
-  },
-  {
-    id: "2a",
-    title: "event 2a",
-    start: "2022-12-15T14:00:00",
-    end: "2022-12-15T17:00:00",
-  },
-  {
-    id: 3,
-    title: "event 3",
-    start: "2022-12-22",
-    end: "2022-12-24",
-  },
-];
