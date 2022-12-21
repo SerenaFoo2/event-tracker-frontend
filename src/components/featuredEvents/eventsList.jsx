@@ -9,7 +9,7 @@ export default function EventsList() {
   function displayEvents() {
     const events = allEvents.map((event) => {
       return (
-        <Grid item xs={6} key={event._id}>
+        <Grid item xs={6} md={4} key={event._id}>
           <EventCard event={event} />
         </Grid>
       );
@@ -19,8 +19,8 @@ export default function EventsList() {
 
   return (
     <Stack spacing={0} px={3} pb={6}>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        {allEvents.length > 0 ? displayEvents() : "no events"}
+      <Grid container rowSpacing={3}>
+        {allEvents.length > 0 ? displayEvents() : ""}
       </Grid>
     </Stack>
   );

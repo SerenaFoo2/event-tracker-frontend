@@ -1,18 +1,13 @@
-// import Filter from "./filter";
-// import EventCard from "./eventCard";
 import EventsList from "./eventsList";
-import { Box, Stack, Typography } from "@mui/material";
-import { Colors } from "../../styles/theme";
+import { Box, Stack } from "@mui/material";
+import { FeaturedEventsTitle } from "../../styles/featuredEvents";
 
 export default function FeaturedEvents() {
   return (
     <Stack spacing={0} px={3} pb={6}>
-      <Box sx={{ textAlign: "center" }} py={5}>
-        <Typography variant="h5" color={Colors.text}>
-          Featured Events
-        </Typography>
+      <Box sx={{ textAlign: "center", marginTop: 5, marginBottom: 3 }}>
+        <FeaturedEventsTitle> Featured Events</FeaturedEventsTitle>
       </Box>
-      {/*  <Filter style="text-align:left" />   to Serena: this needs to be updated?*/}
       <EventsList />
     </Stack>
   );

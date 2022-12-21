@@ -2,12 +2,15 @@ import { useContext } from "react";
 import httpStatus from "http-status";
 import { AuthContext } from "../../context/authContext";
 import { UserContext } from "../../context/userContext";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import { EventTitle, EventTextBody } from "../../styles/featuredEvents";
 
 export default function FavouriteEventModal({
   modalOpen,
@@ -25,7 +28,6 @@ export default function FavouriteEventModal({
     });
   };
 
-  //! update this later
   /* Remove selected event from calender and users/:id db:
       - close modal.
       - delete selectedEvent_id from users.savedEvents in db. 
@@ -98,6 +100,28 @@ export default function FavouriteEventModal({
     }
   }
 
+  function displayEventContent() {
+    return (
+      <EventTextBody>
+        {`${
+          ADDOrREMOVE === "ADD" ? "Add this event to" : "Remove this event from"
+        } your calender?`}
+      </EventTextBody>
+    );
+  }
+
+  function displayButtonAdd_Remove() {
+    return (
+      <Button
+        onClick={
+          ADDOrREMOVE === "ADD" ? handleClickAddEvent : handleClickRemoveEvent
+        }
+      >
+        {`${ADDOrREMOVE === "ADD" ? "Add" : "Remove"} Event`}
+      </Button>
+    );
+  }
+
   const { ADDOrREMOVE } = selectedEvent;
   return (
     <div>
@@ -107,26 +131,16 @@ export default function FavouriteEventModal({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{event.title}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          <EventTitle>{event.title}</EventTitle>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {`${
-              ADDOrREMOVE === "ADD"
-                ? "Add this event to"
-                : "Remove this event from"
-            } your calender?`}
+            {displayEventContent()}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={
-              ADDOrREMOVE === "ADD"
-                ? handleClickAddEvent
-                : handleClickRemoveEvent
-            }
-          >
-            {`${ADDOrREMOVE === "ADD" ? "Add" : "Remove"} Event`}
-          </Button>
+          {displayButtonAdd_Remove()}
           <Button onClick={handleClose} autoFocus>
             Cancel
           </Button>

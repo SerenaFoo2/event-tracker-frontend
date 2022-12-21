@@ -4,6 +4,7 @@ import axios from "axios";
 import httpStatus from "http-status";
 import { TextField, Button, Typography, Stack, Box } from "@mui/material";
 import { FooterText } from "../styles/signUp";
+import { Colors } from "../styles/theme";
 
 export default function SignUp() {
   const inputInforDefault = { name: "", email: "", password: "" };
@@ -71,7 +72,9 @@ export default function SignUp() {
     <div>
       SignUp Page
       <Box sx={{ textAlign: "center" }} pt={4}>
-        <Typography variant="h6">Create Account</Typography>
+        <Typography variant="h6" color={Colors.text}>
+          Create Account
+        </Typography>
       </Box>
       <Stack justifyContent="center" alignItems="center">
         <Box component="form" onSubmit={handleSubmitSignUp}>
