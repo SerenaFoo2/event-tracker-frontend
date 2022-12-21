@@ -1,69 +1,83 @@
-import { Box, Slide } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
+import { Box, Slide } from "@mui/material";
 import { AllEventsContext } from "../../context/allEventsContext";
-
-import {
-  EventSlider,
-  CarouselEventContainer,
-} from "../../styles/carouselEvents";
+import { CarouselEventContainer } from "../../styles/carouselEvents";
 
 export default function CarouselEvent() {
   const [eventIndex, setEventIndex] = useState(0);
   const [show, setShow] = useState(true);
-  const { allEvents } = useContext(AllEventsContext);
+
   const [featuredEvents, setFeaturedEvents] = useState([]);
 
-  function featuredCards() {
-    if (allEvents[0]) {
-      const allfeaturedCards = allEvents.filter((event) => {
-        return event.is_featured === true;
-      });
-      setFeaturedEvents(allfeaturedCards);
-    }
-  }
+  const { allEvents } = useContext(AllEventsContext);
 
-  console.log(allEvents[0] && allEvents?.image_urls);
+  // console.log(allEvents[0]?.title ? allEvents[0]?.title : "no infor yet");
 
+  /*  get all events with "is_featured === true", and update to "featuredEvents" */
   useEffect(() => {
-    setTimeout(() => {
-      setShow(false);
-    }, 3000);
+    if (allEvents?.length) {
+      const allFeaturedEvents = allEvents.filter(
+        (event) => event.is_featured === true
+      );
+      setFeaturedEvents(allFeaturedEvents);
+      console.log("allFeaturedEvents: ", allFeaturedEvents);
+    }
+  }, [allEvents]);
 
-    console.log(allEvents && allEvents?.image_urls);
-
-    const intervalId = setInterval(() => {
-      setEventIndex((i) => {
-        console.log(i, allEvents.length);
-        return (i + 1) % (allEvents.length > 0 ? allEvents.length : 0);
-      });
-      setShow(true);
-
+  /*  start slider once featuredEvents is updated. */
+  useEffect(() => {
+    if (featuredEvents?.length) {
       setTimeout(() => {
         setShow(false);
       }, 3000);
-    }, 4000);
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
-  // console.log(allEvents && allEvents[0].image_urls);
+      // console.log(allEvents[0]?.price);
+      const intervalId = setInterval(() => {
+        setEventIndex((i) => {
+          // console.log(i, featuredEvents.length);
+          return (i + 1) % featuredEvents.length;
+        });
+        setShow(true);
+
+        setTimeout(() => {
+          setShow(false);
+        }, 3000);
+      }, 4000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [featuredEvents]);
 
   return (
     <CarouselEventContainer>
-      {/* {allEvents && setFeaturedEvents()} */}
       <Slide
         direction={show ? "left" : "right"}
         in={show}
         timeout={{ enter: 500, exit: 100 }}
       >
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <EventSlider>
+        <Box
+          sx={{
+            // border: "4px dashed green",
+            height: "400px",
+            width: "100%",
+          }}
+        >
+          {featuredEvents[0] ? (
             <img
-              src={allEvents && allEvents[eventIndex]?.image_urls}
-              alt="pic"
+              height="400px"
+              width="100%"
+              src={featuredEvents[eventIndex].image_urls}
+              onClick={() => {
+                const selectedEvent = featuredEvents[eventIndex];
+                alert("you have click on event: ", selectedEvent); //! add event details
+              }}
+              alt={featuredEvents[eventIndex].title}
             />
-          </EventSlider>
+          ) : (
+            <Box>"Loading..."</Box> //! add loader
+          )}
         </Box>
       </Slide>
     </CarouselEventContainer>

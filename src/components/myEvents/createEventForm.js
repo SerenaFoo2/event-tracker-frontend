@@ -16,15 +16,14 @@ export default function CreateEventForm() {
   const { setAllEvents } = useContext(AllEventsContext);
 
   const inputInforDefault = {
-    title: "new event title",
+    title: "", //"new event title",
     start: new Date().toDateString(),
     end: new Date().toDateString(),
-    location: "Malaysia",
-    description: "for social",
-    image_urls:
-      "https://cdn.eventfinda.sg/uploads/events/transformed/49182-23629-34.jpg?v=2",
-    arts_groups: "Vivocity",
-    price: "35",
+    location: "", //Malaysia",
+    description: "", //"for social",
+    image_urls: "", //"https://cdn.eventfinda.sg/uploads/events/transformed/49182-23629-34.jpg?v=2",
+    arts_groups: "", //"Vivocity",
+    price: "0",
     is_featured: false,
   };
   const errorDefault = "";

@@ -1,4 +1,4 @@
-import { Box, styled, Typography } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 export const CarouselEventContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -8,21 +8,5 @@ export const CarouselEventContainer = styled(Box)(({ theme }) => ({
   height: "100%",
   padding: "0px",
   backgroundColor: "#000",
-  [theme.breakpoints.down("md")]: {
-    padding: "100px 100px",
-  },
-  [theme.breakpoints.down("sm")]: {
-    padding: "100px 100px",
-  },
-}));
-
-export const EventSlider = styled(Typography)(({ theme }) => ({
-  fontSize: "2rem",
   color: "white",
-  [theme.breakpoints.down("md")]: {
-    fontSize: "20px",
-  },
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "20px",
-  },
 }));
