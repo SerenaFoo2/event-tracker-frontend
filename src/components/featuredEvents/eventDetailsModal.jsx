@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { UserContext } from "../../context/userContext";
 import {
   Button,
   Dialog,
@@ -19,9 +17,7 @@ export default function EventDetailsModal({
   eventDetails,
   setEventDetails,
 }) {
-  const { userInfo } = useContext(UserContext);
-
-  const { event, displayFavoriteButton } = eventDetails;
+  const { event } = eventDetails;
 
   const handleClose = () => {
     // close modal.
@@ -81,9 +77,8 @@ export default function EventDetailsModal({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {userInfo.role === "user" ? displayFavoriteButton() : ""}
           <Button onClick={handleClose} autoFocus>
-            Cancel
+            close
           </Button>
         </DialogActions>
       </Dialog>

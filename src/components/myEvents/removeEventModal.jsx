@@ -3,12 +3,14 @@ import httpStatus from "http-status";
 import { AuthContext } from "../../context/authContext";
 import { UserContext } from "../../context/userContext";
 import { AllEventsContext } from "../../context/allEventsContext";
+import { NotificationModalContext } from "../../context/notificationModalContext";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { EventTextBody, EventTitle } from "../../styles/featuredEvents";
 
 export default function RemoveEventModal({
   modalOpen,
@@ -18,6 +20,7 @@ export default function RemoveEventModal({
   const { axiosJWT } = useContext(AuthContext);
   const { userInfo, setUserInfo } = useContext(UserContext);
   const { allEvents, setAllEvents } = useContext(AllEventsContext);
+  const { setNotificationModal } = useContext(NotificationModalContext);
 
   const handleClose = () => {
     // close modal.
@@ -70,11 +73,19 @@ export default function RemoveEventModal({
           setUserInfo((prev) => {
             return { ...prev, savedEvents: newSavedEvents };
           });
+
+          setNotificationModal((prev) => {
+            return {
+              ...prev,
+              modalOpen: true,
+              message:
+                "Event has been successfully removed from your calender!",
+            };
+          });
         }
         return;
       } else {
       }
-
       const response = await axiosJWT.delete(
         `${process.env.REACT_APP_API_URL}/events/${selectedEvent_id}`
       );
@@ -89,16 +100,35 @@ export default function RemoveEventModal({
         const newSavedEvents = userInfo.savedEvents.filter((event) => {
           return event._id !== selectedEvent_id;
         });
+
         setUserInfo((prev) => {
           return { ...prev, savedEvents: newSavedEvents };
         });
 
+        setNotificationModal((prev) => {
+          return {
+            ...prev,
+            modalOpen: true,
+            message: "Event has been successfully added into your calender!",
+          };
+        });
         return;
       }
     } catch (err) {
       console.log(err);
     }
   };
+
+  function DisplayEventContent() {
+    return (
+      <EventTextBody>
+        {"Remove this event from " +
+          (userInfo.role === "admin"
+            ? `database and users' saved events?`
+            : `your calender?`)}
+      </EventTextBody>
+    );
+  }
 
   return (
     <div>
@@ -108,13 +138,13 @@ export default function RemoveEventModal({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{event.title}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          <EventTitle>{event.title}</EventTitle>
+        </DialogTitle>
+
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {"Remove this event from " +
-              (userInfo.role === "admin"
-                ? `database and users' saved events?`
-                : `your calender?`)}
+            {DisplayEventContent()}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -28,7 +28,6 @@ export default function ImgMediaCard({ event }) {
   const defaultEventDetails = {
     event: {},
     modalOpen: false,
-    displayFavoriteButton: displayFavoriteButton,
   };
 
   const [selectedEvent, setSelectedEvent] = useState(defaultSelectedEvent);
@@ -38,13 +37,18 @@ export default function ImgMediaCard({ event }) {
 
   function handleClickLearnMore() {
     setEventDetails((prev) => {
-      return { ...prev, modalOpen: true, event: event };
+      return {
+        ...prev,
+        modalOpen: true,
+        event: event,
+      };
     });
   }
 
   /* open modal by:
       - update "setSelectedEvent" and pass in all other information.  */
   function handleClickAddEvent() {
+    console.log("handleClickAddEvent");
     setSelectedEvent((prev) => {
       return { ...prev, modalOpen: true, event: event, ADDOrREMOVE: "ADD" };
     });
@@ -53,6 +57,7 @@ export default function ImgMediaCard({ event }) {
   /* open modal by:
       - update "setSelectedEvent" and pass in all other information.  */
   function handleClickRemoveEvent() {
+    console.log("handleClickRemoveEvent");
     setSelectedEvent((prev) => {
       return { ...prev, modalOpen: true, event: event, ADDOrREMOVE: "REMOVE" };
     });
@@ -73,7 +78,7 @@ export default function ImgMediaCard({ event }) {
       iconComponent = <FavoriteBorderIcon onClick={handleClickAddEvent} />;
     }
 
-    return <Button>{iconComponent}</Button>;
+    return <Button size="small">{iconComponent}</Button>;
   }
 
   return (
@@ -86,15 +91,16 @@ export default function ImgMediaCard({ event }) {
     >
       <FavouriteEventModal
         modalOpen={selectedEvent.modalOpen}
-        event={selectedEvent.event}
         selectedEvent={selectedEvent}
         setSelectedEvent={setSelectedEvent}
       />
+
       <EventDetailsModal
         modalOpen={eventDetails.modalOpen}
         eventDetails={eventDetails}
         setEventDetails={setEventDetails}
       />
+
       <Card sx={{ maxWidth: 300 }}>
         <CardMedia
           component="img"
@@ -107,7 +113,9 @@ export default function ImgMediaCard({ event }) {
         </CardContent>
         <CardActions sx={{ paddingTop: 0 }}>
           {userInfo.role === "user" ? displayFavoriteButton() : ""}
-          <Button onClick={handleClickLearnMore}>Learn More</Button>
+          <Button size="small" onClick={handleClickLearnMore}>
+            Learn More
+          </Button>
         </CardActions>
       </Card>
     </Box>

@@ -3,10 +3,10 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import axios from "axios";
 import httpStatus from "http-status";
-import { TextField, Button, Typography, Stack, Box } from "@mui/material";
+import { TextField, Button, Stack, Box } from "@mui/material";
 import { FooterText } from "../styles/signUp";
 import { UserContext } from "../context/userContext";
-import { Colors } from "../styles/theme";
+import { FormTitle } from "../styles/forms";
 
 export default function Login() {
   const loginInforDefault = { email: "loo@hotmail.com", password: "abc" }; //! for debugging only.
@@ -99,9 +99,7 @@ export default function Login() {
   return (
     <Stack justifyContent="center">
       <Box sx={{ textAlign: "center" }} pt={4}>
-        <Typography variant="h6" color={Colors.text}>
-          Login
-        </Typography>
+        <FormTitle>Login</FormTitle>
       </Box>
 
       <Stack justifyContent="center" alignItems="center">

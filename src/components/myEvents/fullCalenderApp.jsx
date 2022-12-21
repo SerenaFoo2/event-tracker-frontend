@@ -9,6 +9,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import UpdateEventDateModal from "./updateEventDateModal";
+import { Box } from "@mui/material";
 
 export default function FullCalenderApp() {
   const calenderRef = useRef(null);
@@ -52,14 +53,6 @@ export default function FullCalenderApp() {
     });
   }
 
-  // function handleNewDatesSelection(selectionInfo) {
-  //   const newStartDateTime = selectionInfo.startStr;
-  //   const newEndDateTime = selectionInfo.endStr;
-  //   console.log("selectionInfo: ", selectionInfo);
-  //   console.log("newStartDate: ", newStartDateTime, typeof newStartDateTime);
-  //   console.log("newEndDate: ", newEndDateTime, typeof newEndDateTime);
-  // }
-
   return (
     <div>
       <RemoveEventModal
@@ -67,46 +60,57 @@ export default function FullCalenderApp() {
         event={selectedEvent.event}
         setSelectedEvent={setSelectedEvent}
       />
-      <UpdateEventDateModal
-        modalOpen={newEventDates.modalOpen}
-        changeInfo={newEventDates.changeInfo}
-        setNewEventDates={setNewEventDates}
-      />
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-        initialView="dayGridMonth"
-        customButtons={{
-          addEventButton: {
-            text: "Add Event",
-            click: () => {
-              navigate("/createEventForm");
+
+      {newEventDates?.changeInfo ? (
+        <UpdateEventDateModal
+          modalOpen={newEventDates.modalOpen}
+          changeInfo={newEventDates.changeInfo}
+          setNewEventDates={setNewEventDates}
+        />
+      ) : (
+        ""
+      )}
+      <Box sx={{ paddingY: 4, paddingX: 5 }}>
+        <FullCalendar
+          height={"80vh"}
+          plugins={[
+            dayGridPlugin,
+            timeGridPlugin,
+            interactionPlugin,
+            listPlugin,
+          ]}
+          initialView="dayGridMonth"
+          customButtons={{
+            addEventButton: {
+              text: "Add Event",
+              click: () => {
+                navigate("/createEventForm");
+              },
             },
-          },
-        }}
-        headerToolbar={{
-          left: "prev,next today",
-          center: `title`,
-          right: `${
-            role === "admin"
-              ? "addEventButton dayGridMonth,timeGridWeek,timeGridDay,listWeek"
-              : "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
-          }`,
-        }}
-        events={role === "admin" ? allEvents : savedEvents}
-        eventTimeFormat={{
-          hour: "numeric",
-          meridiem: "short",
-        }}
-        ref={calenderRef}
-        weekNumbers={true}
-        navLinks={true} // allows to click day/week names to navigate views
-        eventClick={handleEventClick} //TODO for admin mode, make it delete event from /events
-        nowIndicator={true}
-        // selectable={role === "admin" ? true : false}
-        // select={handleNewDatesSelection}  // select a range of date/days, controlled by "selectable"
-        editable={role === "admin" ? true : false}
-        eventChange={handleEventDateChange} // controlled by "editable"
-      ></FullCalendar>
+          }}
+          headerToolbar={{
+            left: "prev,next today",
+            center: `title`,
+            right: `${
+              role === "admin"
+                ? "addEventButton dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+                : "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+            }`,
+          }}
+          events={role === "admin" ? allEvents : savedEvents}
+          eventTimeFormat={{
+            hour: "numeric",
+            meridiem: "short",
+          }}
+          ref={calenderRef}
+          weekNumbers={true}
+          navLinks={true} // allows to click day/week names to navigate views
+          eventClick={handleEventClick} //TODO for admin mode, make it delete event from /events
+          nowIndicator={true}
+          editable={role === "admin" ? true : false}
+          eventChange={handleEventDateChange} // controlled by "editable"
+        ></FullCalendar>
+      </Box>
     </div>
   );
 }

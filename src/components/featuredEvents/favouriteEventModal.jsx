@@ -2,6 +2,7 @@ import { useContext } from "react";
 import httpStatus from "http-status";
 import { AuthContext } from "../../context/authContext";
 import { UserContext } from "../../context/userContext";
+import { NotificationModalContext } from "../../context/notificationModalContext";
 import {
   Button,
   Dialog,
@@ -14,12 +15,14 @@ import { EventTitle, EventTextBody } from "../../styles/featuredEvents";
 
 export default function FavouriteEventModal({
   modalOpen,
-  event,
   selectedEvent,
   setSelectedEvent,
 }) {
   const { axiosJWT } = useContext(AuthContext);
   const { userInfo, setUserInfo } = useContext(UserContext);
+  const { setNotificationModal } = useContext(NotificationModalContext);
+
+  const { ADDOrREMOVE, event } = selectedEvent;
 
   const handleClose = () => {
     // close modal.
@@ -54,7 +57,14 @@ export default function FavouriteEventModal({
         setUserInfo((prev) => {
           return { ...prev, savedEvents: newSavedEvents };
         });
-        alert("remove event from user SUCCESS!");
+
+        setNotificationModal((prev) => {
+          return {
+            ...prev,
+            modalOpen: true,
+            message: "Event has been removed successfully from your calender!",
+          };
+        });
         return;
       }
 
@@ -90,7 +100,14 @@ export default function FavouriteEventModal({
         setUserInfo((prev) => {
           return { ...prev, savedEvents: newSavedEvents };
         });
-        alert("add event to user SUCCESS!");
+
+        setNotificationModal((prev) => {
+          return {
+            ...prev,
+            modalOpen: true,
+            message: "Event has been added successfully into your calender!",
+          };
+        });
         return;
       }
       //any other error
@@ -122,7 +139,6 @@ export default function FavouriteEventModal({
     );
   }
 
-  const { ADDOrREMOVE } = selectedEvent;
   return (
     <div>
       <Dialog
