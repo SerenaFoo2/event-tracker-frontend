@@ -2,8 +2,8 @@ const eventdata = [
   {
     is_featured: true,
     title: "Pinocchio",
-    start: "2022-12-20T00:00:00.000Z",
-    end: "2022-12-24T00:00:00.000Z",
+    start: "2022-12-07T00:00:00.000Z",
+    end: "2022-12-07T00:00:00.000Z",
     location: "The Ngee Ann Kongsi Theatre @ Wild Rice, Funan",
     description:
       "In this cheekily on-the-nose musical adaptation of the classic fairy tale, Wild Rice brings one of the world's most beloved characters to the Singapore stage. Meet Pinocchio, a wooden puppet crafted with loving care by Geppetto – a kind, humble carpenter who has always dreamt of becoming a father. With a wish and a touch of fairy magic, Pinocchio springs to life… but there are some strings attached! To become a real boy, Pinocchio must first prove himself to be brave, kind and true. It’s a challenge the little puppet is determined to overcome – until he is led astray by a pair of wily con artists, and swept up in a madcap misadventure that takes him from the tempting promise of the circus to the deepest depths of the fathomless sea. Directed by Pam Oei, Pinocchio is a brand-new, original musical written by Thomas Lim, with lyrics by Joel Tan and music by Julian Wong. Our fabulous cast includes Mae Elliessa as Pinocchio, Ebi Shankara as Geppetto and Siti Khalijah Zainal as G-Hopper, as well as the adorable First Stage Kids – making a welcome return to the stage after three long years! A hilarious and heartwarming celebration of family, friendship and the importance of being true to yourself, Pinocchio is the perfect holiday treat for you and your loved ones. Wood we lie to you?",
@@ -147,7 +147,7 @@ const eventdata = [
     location: "Gateway Theatre",
     description: `Centimillimental (センチミリメンタル), the multi-talented Japanese singer-songwriter behind the soundtrack and theme songs of popular anime “GIVEN”, will be performing in Singapore on 7 Jan 2023, 8pm at the Gateway Theatre.
 
-    Armed with his band direct from Japan, Centimillimental will be performing a full ‘live’ show, including songs from the popular anime series 【Givenギヴン】- Kizuatoキヅアト、Bokura dake no Shudaika 僕らだけの主題歌、Fuyu No Hanashi冬のはなし、Marutsukeまるつけ、Yoru ga Akeru夜が明ける、【Bakutenバクテン!! 】- Seishun no enbu青春の演舞 and many more hits and surprises!`,
+    Armed with his band direct from Japan, Centimillimental will be performing a full 'live' show, including songs from the popular anime series 【Givenギヴン】- Kizuatoキヅアト、Bokura dake no Shudaika 僕らだけの主題歌、Fuyu No Hanashi冬のはなし、Marutsukeまるつけ、Yoru ga Akeru夜が明ける、【Bakutenバクテン!! 】- Seishun no enbu青春の演舞 and many more hits and surprises!`,
     image_urls:
       "https://static.sistic.com.sg/sistic/docroot/sites/default/files/2022-10/Centimillimental_EP%201194x556.jpg",
     arts_groups: "Centimillimental",
@@ -184,15 +184,15 @@ const eventdata = [
     start: "2023-06-08T00:00:00.000Z",
     end: "2023-07-08T00:00:00.000Z",
     location: "The Ngee Ann Kongsi Theatre @ Wild Rice, Funan",
-    description: `A hotel in Singapore is opened at the turn of the century, when the island is still a jewel in the crown of the British Empire. Each day, new faces appear and swiftly disappear – guests and staff alike.
+    description: `A hotel in Singapore is opened at the turn of the century, when the island is still a jewel in the crown of the British Empire. Each day, new faces appear and swiftly disappear - guests and staff alike.
 
-    Every ten years, we check in to meet the hotel’s residents: Indian mutineers, Cantonese nannies, Malay film stars, Japanese soldiers, transsexual sex workers, wedding guests, suspected terrorists, and more. They live out the pivotal moments in their personal lives, as empires die and new ones are born from their ashes.
+    Every ten years, we check in to meet the hotel's residents: Indian mutineers, Cantonese nannies, Malay film stars, Japanese soldiers, transsexual sex workers, wedding guests, suspected terrorists, and more. They live out the pivotal moments in their personal lives, as empires die and new ones are born from their ashes.
     
     Even though the chambermaids clean up after them, readying the room for the next guests, traces of the past persist, and time reveals its cyclical nature. Ghosts communicate with the living, doubles are separated by decades, and a single moment of decision haunts the generations that come after.
     
     An immersive, multi-generational epic, HOTEL explores the notions of empire, nationhood, migration and identity against the backdrop of a shrinking world. Spanning a century and performed over close to five hours in nine languages, this groundbreaking theatrical event highlights the eclectic energies born from the collisions between the old and the new, East and West, tradition and modernity.
     
-    Written by Alfian Sa’at & Marcia Vanderstraaten
+    Written by Alfian Sa'at & Marcia Vanderstraaten
     Directed by Ivan Heng & Glen Goei
     Starring Munah Bagharib, Rebecca Das, Brendon Fernandez, Ghafir Akbar, Ivan Heng, André Jewson, Jo Kukathas, Dwayne Lau, Lee Chee Keng, Moo Siew Keh, Pam Oei, Oon Shu An, Siti Khalijah Zainal & Yap Yi Kai
     
@@ -208,7 +208,7 @@ const eventdata = [
     start: "2023-01-04T00:00:00.000Z",
     end: "2023-01-20T00:00:00.000Z",
     location: "Peace Centre",
-    description: `Pictures in the Mind is the finale to DECK’s 8-months’ exploration at Peace Centre. This exploration encompasses research on the old, nondescript mall through public contributions, exhibitions by artists at disused retail units in September 2022 (during the 8th biennale Singapore International Photography Festival), and a series of conversations with Peace Centre’s tenants and visitors. This final act of activation presents 5 exhibitions by 7 Singaporean artists, alongside a multi-media heritage showcase by Ngee Ann Polytechnic’s Arts Business Management’s students.
+    description: `Pictures in the Mind is the finale to DECK's 8-months' exploration at Peace Centre. This exploration encompasses research on the old, nondescript mall through public contributions, exhibitions by artists at disused retail units in September 2022 (during the 8th biennale Singapore International Photography Festival), and a series of conversations with Peace Centre’s tenants and visitors. This final act of activation presents 5 exhibitions by 7 Singaporean artists, alongside a multi-media heritage showcase by Ngee Ann Polytechnic’s Arts Business Management’s students.
 
     Although the overarching title references the latent image, Pictures in the Mind goes beyond the one-dimensional exploration in photography with the aim of casting a broader investigation and exploration of the medium. In this final act, each artist attempts new ideas behind an image; the relationship between space and time, the tension between space and place, the association of memories in constructing images, and the contextualisation of pictures in social and personal domains. In these explorations Peace Centre, takes on the role of the space and time stamp for the artists’ works.`,
     image_urls:
