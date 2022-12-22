@@ -1,4 +1,4 @@
-import { NavReactLink, NavText } from "../../styles/navigationBar";
+import { NavReactLink, NavText } from "../../styles/navBar";
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
