@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { UserContext, defaultUserInfo } from "../../context/userContext";
 import { AuthContext, defaultTokens } from "../../context/authContext";
-import { NavText } from "../../styles/navigationbar";
+import { NavText } from "../../styles/navigationBar";
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
