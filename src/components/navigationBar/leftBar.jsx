@@ -3,7 +3,7 @@ import {
   NavText,
   NavReactLink,
   NavLogoText,
-} from "../../styles/navigationbar";
+} from "../../styles/navigationBar";
 import { Stack } from "@mui/material";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 

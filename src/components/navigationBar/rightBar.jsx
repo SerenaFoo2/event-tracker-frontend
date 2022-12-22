@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import { RightContainer, NavText } from "../../styles/navigationbar";
+import { RightContainer, NavText } from "../../styles/navigationBar";
 import LoginIconButton from "./loginIconButton";
 import LogoutIconButton from "./logoutIconButton";
 

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { AppBar } from "@mui/material";
-import { NavToolbar } from "../../styles/navigationbar";
+import { NavToolbar } from "../../styles/navigationBar";
 import LeftBar from "./leftBar";
 import RightBar from "./rightBar";
 
