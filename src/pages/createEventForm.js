@@ -1,10 +1,11 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/authContext";
-import { AllEventsContext } from "../../context/allEventsContext";
+import { AuthContext } from "../context/authContext";
+import { AllEventsContext } from "../context/allEventsContext";
 import httpStatus from "http-status";
+import { NotificationModalContext } from "../context/notificationModalContext";
 import { TextField, Button, Typography, Stack, Box } from "@mui/material";
-import { FooterText } from "../../styles/signUp";
+import { FooterText } from "../styles/signUp";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -14,15 +15,17 @@ import Checkbox from "@mui/material/Checkbox";
 export default function CreateEventForm() {
   const { axiosJWT } = useContext(AuthContext);
   const { setAllEvents } = useContext(AllEventsContext);
+  const { setNotificationModal } = useContext(NotificationModalContext);
 
   const inputInforDefault = {
-    title: "", //"new event title",
+    title: "new event title",
     start: new Date().toDateString(),
     end: new Date().toDateString(),
-    location: "", //Malaysia",
-    description: "", //"for social",
-    image_urls: "", //"https://cdn.eventfinda.sg/uploads/events/transformed/49182-23629-34.jpg?v=2",
-    arts_groups: "", //"Vivocity",
+    location: "Malaysia",
+    description: "for social",
+    image_urls:
+      "https://cdn.eventfinda.sg/uploads/events/transformed/49182-23629-34.jpg?v=2",
+    arts_groups: "Vivocity",
     price: "0",
     is_featured: false,
   };
@@ -62,7 +65,14 @@ export default function CreateEventForm() {
         setAllEvents((prev) => {
           return [...prev, data];
         });
-        alert("New event has been created.");
+
+        setNotificationModal((prev) => {
+          return {
+            ...prev,
+            modalOpen: true,
+            message: "New event has been created successfully!",
+          };
+        });
         return navigate("/myEvents");
       }
 

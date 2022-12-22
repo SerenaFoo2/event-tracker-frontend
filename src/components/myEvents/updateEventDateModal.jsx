@@ -2,12 +2,14 @@ import { useContext } from "react";
 import httpStatus from "http-status";
 import { AuthContext } from "../../context/authContext";
 import { AllEventsContext } from "../../context/allEventsContext";
+import { NotificationModalContext } from "../../context/notificationModalContext";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { EventTextBody, EventTitle } from "../../styles/featuredEvents";
 
 export default function UpdateEventDateModal({
   modalOpen,
@@ -18,6 +20,7 @@ export default function UpdateEventDateModal({
 
   const { axiosJWT } = useContext(AuthContext);
   const { allEvents, setAllEvents } = useContext(AllEventsContext);
+  const { setNotificationModal } = useContext(NotificationModalContext);
 
   const handleClose = () => {
     // close modal.
@@ -63,7 +66,15 @@ export default function UpdateEventDateModal({
 
       if (response.status === httpStatus.OK) {
         setAllEvents(newAllEvents);
-        alert(`New dates for "${event?.title}" has been updated succesfully.`);
+
+        setNotificationModal((prev) => {
+          return {
+            ...prev,
+            modalOpen: true,
+            message: `New dates for "${event.title}" has been updated succesfully.`,
+          };
+        });
+
         return;
       }
       // any other error
@@ -73,6 +84,27 @@ export default function UpdateEventDateModal({
     }
   };
 
+  function DisplayEventContent() {
+    return (
+      <>
+        <EventTextBody>
+          Update event date from:
+          <br></br>
+          &nbsp;&nbsp;start = {oldEvent.startStr}
+          <br></br>
+          &nbsp;&nbsp;end&nbsp;&nbsp; = {oldEvent.endStr}
+          <br></br>
+          <br></br>
+          to new date: <br></br>
+          &nbsp;&nbsp;start = {event.startStr}
+          <br></br>
+          &nbsp;&nbsp;end&nbsp;&nbsp; = {event.endStr}
+          <br></br>
+        </EventTextBody>
+      </>
+    );
+  }
+
   return (
     <div>
       <Dialog
@@ -81,20 +113,13 @@ export default function UpdateEventDateModal({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{event?.title}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          <EventTitle>{event.title}</EventTitle>
+        </DialogTitle>
+
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Update event date from: <br></br>
-            &nbsp;&nbsp;start = {oldEvent?.startStr}
-            <br></br>
-            &nbsp;&nbsp;end = {oldEvent?.endStr}
-            <br></br>
-            <br></br>
-            to new date: <br></br>
-            &nbsp;&nbsp;start = {event?.startStr}
-            <br></br>
-            &nbsp;&nbsp;end = {event?.endStr}
-            <br></br>
+            {DisplayEventContent()}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

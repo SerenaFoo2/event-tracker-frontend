@@ -20,7 +20,7 @@ export default function CarouselEvent() {
         (event) => event.is_featured === true
       );
       setFeaturedEvents(allFeaturedEvents);
-      console.log("allFeaturedEvents: ", allFeaturedEvents);
+      // console.log("allFeaturedEvents: ", allFeaturedEvents);
     }
   }, [allEvents]);
 
@@ -76,7 +76,7 @@ export default function CarouselEvent() {
               alt={featuredEvents[eventIndex].title}
             />
           ) : (
-            <Box>"Loading..."</Box> //! add loader
+            <Box>""</Box> //! add loader
           )}
         </Box>
       </Slide>

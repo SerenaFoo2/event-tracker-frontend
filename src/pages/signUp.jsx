@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import httpStatus from "http-status";
-import { TextField, Button, Typography, Stack, Box } from "@mui/material";
+import { TextField, Button, Stack, Box } from "@mui/material";
 import { FooterText } from "../styles/signUp";
+import { FormTitle } from "../styles/forms";
 
 export default function SignUp() {
   const inputInforDefault = { name: "", email: "", password: "" };
@@ -71,7 +72,7 @@ export default function SignUp() {
     <div>
       SignUp Page
       <Box sx={{ textAlign: "center" }} pt={4}>
-        <Typography variant="h6">Create Account</Typography>
+        <FormTitle>Create Account</FormTitle>
       </Box>
       <Stack justifyContent="center" alignItems="center">
         <Box component="form" onSubmit={handleSubmitSignUp}>

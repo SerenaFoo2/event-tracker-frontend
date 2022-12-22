@@ -6,10 +6,7 @@ export default function LoginIconButton() {
   return (
     <NavReactLink to="/login">
       <IconButton aria-label="login">
-        <AccountCircleIcon
-          sx={{ fontSize: "1.5rem" }}
-          // { xs: "1.4rem", sm: "1.4rem", md: "1.5rem" }
-        />
+        <AccountCircleIcon sx={{ fontSize: "1.5rem", paddingX: 1 }} />
         <NavText> Login / SignUp</NavText>
       </IconButton>
     </NavReactLink>

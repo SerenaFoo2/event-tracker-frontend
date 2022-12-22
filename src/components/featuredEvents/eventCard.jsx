@@ -1,14 +1,18 @@
 import { useState, useContext } from "react";
 import FavouriteEventModal from "./favouriteEventModal";
+import EventDetailsModal from "./eventDetailsModal";
 import { UserContext } from "../../context/userContext";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+} from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { CardTitle } from "../../styles/featuredEvents";
 
 export default function ImgMediaCard({ event }) {
   const { title, image_urls } = event;
@@ -20,13 +24,31 @@ export default function ImgMediaCard({ event }) {
     ADDOrREMOVE: "", //"ADD" or "REMOVE"
   };
 
+  // use in <EventDetailsModal>
+  const defaultEventDetails = {
+    event: {},
+    modalOpen: false,
+  };
+
   const [selectedEvent, setSelectedEvent] = useState(defaultSelectedEvent);
+  const [eventDetails, setEventDetails] = useState(defaultEventDetails);
 
   const { userInfo } = useContext(UserContext);
+
+  function handleClickLearnMore() {
+    setEventDetails((prev) => {
+      return {
+        ...prev,
+        modalOpen: true,
+        event: event,
+      };
+    });
+  }
 
   /* open modal by:
       - update "setSelectedEvent" and pass in all other information.  */
   function handleClickAddEvent() {
+    console.log("handleClickAddEvent");
     setSelectedEvent((prev) => {
       return { ...prev, modalOpen: true, event: event, ADDOrREMOVE: "ADD" };
     });
@@ -35,6 +57,7 @@ export default function ImgMediaCard({ event }) {
   /* open modal by:
       - update "setSelectedEvent" and pass in all other information.  */
   function handleClickRemoveEvent() {
+    console.log("handleClickRemoveEvent");
     setSelectedEvent((prev) => {
       return { ...prev, modalOpen: true, event: event, ADDOrREMOVE: "REMOVE" };
     });
@@ -55,38 +78,46 @@ export default function ImgMediaCard({ event }) {
       iconComponent = <FavoriteBorderIcon onClick={handleClickAddEvent} />;
     }
 
-    return (
-      <Button size="small" margin="right">
-        {iconComponent}
-      </Button>
-    );
+    return <Button size="small">{iconComponent}</Button>;
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+      mx={2}
+    >
       <FavouriteEventModal
         modalOpen={selectedEvent.modalOpen}
-        event={selectedEvent.event}
         selectedEvent={selectedEvent}
         setSelectedEvent={setSelectedEvent}
       />
-      <Card sx={{ maxWidth: 345 }}>
+
+      <EventDetailsModal
+        modalOpen={eventDetails.modalOpen}
+        eventDetails={eventDetails}
+        setEventDetails={setEventDetails}
+      />
+
+      <Card sx={{ maxWidth: 300 }}>
         <CardMedia
           component="img"
           alt={title}
-          height="140"
+          height="140px"
           image={image_urls}
         />
-        <CardContent>
-          <Typography gutterBottom variant="body1" component="div">
-            {title}
-          </Typography>
+        <CardContent sx={{ paddingY: 1 }}>
+          <CardTitle>{title}</CardTitle>
         </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
+        <CardActions sx={{ paddingTop: 0 }}>
           {userInfo.role === "user" ? displayFavoriteButton() : ""}
+          <Button size="small" onClick={handleClickLearnMore}>
+            Learn More
+          </Button>
         </CardActions>
       </Card>
-    </>
+    </Box>
   );
 }
