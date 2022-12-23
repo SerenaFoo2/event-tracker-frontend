@@ -9,7 +9,7 @@ export default function NavigationBar() {
     <>
       <AppBar
         position="sticky"
-        sx={{ backgroundColor: "rgba(133, 0, 0, 0.77)" }}
+        sx={{ backgroundColor: "rgba(133, 0, 0)" }}
         // sx={{ color: "primary.dark", backgroundColor: "#fff" }}
       >
         <NavToolbar>
