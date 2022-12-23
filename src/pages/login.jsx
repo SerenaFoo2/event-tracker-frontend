@@ -101,11 +101,13 @@ export default function Login() {
       <img
         src="https://images.unsplash.com/photo-1438012940875-4bf705025a8a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
         alt="dance"
-        width="100%"
-        height="80%"
-        objectfit="fill"
+        objectfit="cover"
         position="absolute"
         filter="blur(8px)"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(255, 0, 0, 0.2), rgba(0, 0, 0, 0.75))",
+        }}
       />
       <Box
         style={{
