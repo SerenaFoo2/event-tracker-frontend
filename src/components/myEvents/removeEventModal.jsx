@@ -109,7 +109,8 @@ export default function RemoveEventModal({
           return {
             ...prev,
             modalOpen: true,
-            message: "Event has been successfully added into your calender!",
+            message:
+              "Event has been successfully removed from both event's and users' databases!",
           };
         });
         return;

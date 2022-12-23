@@ -1,7 +1,8 @@
 import { useEffect, useState, useContext } from "react";
-import { Box, Slide } from "@mui/material";
+import { Box, Slide, CircularProgress } from "@mui/material";
 import { AllEventsContext } from "../../context/allEventsContext";
 import { CarouselEventContainer } from "../../styles/carouselEvents";
+import { EventDetailsModalContext } from "../../context/eventDetailsModalContext";
 
 export default function CarouselEvent() {
   const [eventIndex, setEventIndex] = useState(0);
@@ -10,8 +11,7 @@ export default function CarouselEvent() {
   const [featuredEvents, setFeaturedEvents] = useState([]);
 
   const { allEvents } = useContext(AllEventsContext);
-
-  // console.log(allEvents[0]?.title ? allEvents[0]?.title : "no infor yet");
+  const { setEventDetailsModal } = useContext(EventDetailsModalContext);
 
   /*  get all events with "is_featured === true", and update to "featuredEvents" */
   useEffect(() => {
@@ -20,7 +20,6 @@ export default function CarouselEvent() {
         (event) => event.is_featured === true
       );
       setFeaturedEvents(allFeaturedEvents);
-      // console.log("allFeaturedEvents: ", allFeaturedEvents);
     }
   }, [allEvents]);
 
@@ -31,10 +30,8 @@ export default function CarouselEvent() {
         setShow(false);
       }, 3000);
 
-      // console.log(allEvents[0]?.price);
       const intervalId = setInterval(() => {
         setEventIndex((i) => {
-          // console.log(i, featuredEvents.length);
           return (i + 1) % featuredEvents.length;
         });
         setShow(true);
@@ -50,6 +47,17 @@ export default function CarouselEvent() {
     }
   }, [featuredEvents]);
 
+  function handleClickImage() {
+    const selectedEvent = featuredEvents[eventIndex];
+    setEventDetailsModal((prev) => {
+      return {
+        ...prev,
+        modalOpen: true,
+        event: selectedEvent,
+      };
+    });
+  }
+
   return (
     <CarouselEventContainer>
       <Slide
@@ -59,7 +67,6 @@ export default function CarouselEvent() {
       >
         <Box
           sx={{
-            // border: "4px dashed green",
             height: "400px",
             width: "100%",
           }}
@@ -69,14 +76,11 @@ export default function CarouselEvent() {
               height="400px"
               width="100%"
               src={featuredEvents[eventIndex].image_urls}
-              onClick={() => {
-                const selectedEvent = featuredEvents[eventIndex];
-                alert("you have click on event: ", selectedEvent); //! add event details
-              }}
+              onClick={handleClickImage}
               alt={featuredEvents[eventIndex].title}
             />
           ) : (
-            <Box>""</Box> //! add loader
+            <CircularProgress />
           )}
         </Box>
       </Slide>

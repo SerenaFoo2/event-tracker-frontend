@@ -77,9 +77,7 @@ export default function EventDetailsModal({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            close
-          </Button>
+          <Button onClick={handleClose}>close</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -35,10 +35,27 @@ export const EventDetailsBody = styled("span")(({ theme }) => ({
 export const CardTitle = styled(Typography)(({ theme }) => ({
   color: Colors.text,
   fontSize: "1rem",
-  fontWeight: 400,
+  fontWeight: 500,
   lineHeight: 1.75,
   letterSpacing: "0.00938em",
   // same as variant: subtitle1
+
+  // if text overflow, show ellipsis
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+}));
+
+export const CardText = styled(Typography)(({ theme }) => ({
+  color: Colors.text,
+  fontSize: "0.65rem",
+  lineHeight: 1.75,
+  letterSpacing: "0.00938em",
+
+  // if text overflow, show ellipsis
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
 }));
 
 export const FeaturedEventsTitle = styled(Typography)(({ theme }) => ({

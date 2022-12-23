@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { AppBar } from "@mui/material";
 import { NavToolbar } from "../../styles/navBar";
 import LeftBar from "./leftBar";
@@ -14,7 +14,7 @@ export default function NavigationBar() {
       >
         <NavToolbar>
           <LeftBar />
-          <Link to="/fetch">examplefetchData</Link>
+          {/* <Link to="/fetch">examplefetchData</Link> */}
           <RightBar />
         </NavToolbar>
       </AppBar>
