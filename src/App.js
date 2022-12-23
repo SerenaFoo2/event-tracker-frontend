@@ -3,7 +3,7 @@ import Home from "./pages/home";
 import SignUp from "./pages/signUp";
 import Login from "./pages/login";
 import MyEvents from "./pages/myEvents";
-import CreateEventForm from "./pages/createEventForm";
+import CreateEventForm from "./components/forms/createEventForm";
 import NotificationModal from "./components/modals/notificationModal";
 import ExamplefetchData from "./pages/examplefetchData";
 import { NotificationModalContext } from "./context/notificationModalContext";

@@ -9,7 +9,7 @@ import { UserContext } from "../context/userContext";
 import { FormTitle } from "../styles/forms";
 
 export default function Login() {
-  const loginInforDefault = { email: "loo@hotmail.com", password: "abc" }; //! for debugging only.
+  const loginInforDefault = { email: "", password: "" };
   const errorDefault = "";
 
   const [loginInfor, setLoginInfor] = useState(loginInforDefault);
