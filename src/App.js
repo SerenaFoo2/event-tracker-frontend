@@ -5,11 +5,11 @@ import Login from "./pages/login";
 import MyEvents from "./pages/myEvents";
 import CreateEventForm from "./components/forms/createEventForm";
 import NotificationModal from "./components/modals/notificationModal";
-import ExamplefetchData from "./pages/examplefetchData";
 import { NotificationModalContext } from "./context/notificationModalContext";
 import { useContext } from "react";
 import { EventDetailsModalContext } from "./context/eventDetailsModalContext";
 import EventDetailsModal from "./components/modals/eventDetailsModal";
+// import ExamplefetchData from "./forDevelopmentOnly/examplefetchData";
 
 function App() {
   const { notificationModal, setNotificationModal } = useContext(
@@ -41,7 +41,7 @@ function App() {
             <Route path="signUp" element={<SignUp />}></Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="createEventForm" element={<CreateEventForm />}></Route>
-            <Route path="fetch" element={<ExamplefetchData />}></Route>
+            {/* <Route path="fetch" element={<ExamplefetchData />}></Route> */}
           </Route>
         </Routes>
       </Router>

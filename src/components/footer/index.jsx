@@ -59,14 +59,14 @@ export default function Footer() {
               <FooterText>Serena Foo: </FooterText>
               <Box sx={{ my: 0, display: "flex", gap: 2 }}>
                 <IconButton
-                  aria-label="GitHub Icon"
+                  aria-label="Serene's GitHub Url"
                   href="https://github.com/SerenaFoo2/event-tracker-frontend"
                 >
-                  <GitHubIcon href="www.google.com" />
+                  <GitHubIcon />
                 </IconButton>
                 <IconButton
-                  aria-label="LinkedIn Icon"
-                  href="https://www.linkedin.com/in/hong-yuan-loo-815944a2/" //! to be updated
+                  aria-label="Serene's LinkedIn Url"
+                  href="https://www.linkedin.com/in/serena-foo-0b19b2227/"
                 >
                   <LinkedInIcon />
                 </IconButton>
@@ -81,13 +81,13 @@ export default function Footer() {
               <FooterText>Hong Yuan: </FooterText>
               <Box sx={{ my: 0, display: "flex", gap: 2 }}>
                 <IconButton
-                  aria-label="GitHub Icon"
+                  aria-label="Hong Yuan's GitHub Url"
                   href="https://github.com/hongyuanloo/event-tracker-backend"
                 >
-                  <GitHubIcon href="www.google.com" />
+                  <GitHubIcon />
                 </IconButton>
                 <IconButton
-                  aria-label="LinkedIn Icon"
+                  aria-label="Hong Yuan's LinkedIn Url"
                   href="https://www.linkedin.com/in/hong-yuan-loo-815944a2/"
                 >
                   <LinkedInIcon />
