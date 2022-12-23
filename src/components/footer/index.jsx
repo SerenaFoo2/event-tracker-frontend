@@ -20,14 +20,22 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export default function Footer() {
   return (
-    <FooterContainer>
+    <FooterContainer style={{ background: "#850000" }}>
       <Grid container spacing={2} justifyContent="center">
         <Grid item sm={12} md={6}>
-          <FooterTitle>About Us</FooterTitle>
+          <FooterTitle fontSize="100">About Us</FooterTitle>
           <Typography variant="caption" component="p">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris a
-            diam maecenas sed enim ut.
+            Watch WAT? Don't know where to head this weekend? No problem. WATch!
+            delivers a cuarted list of the most exiting events, tailored just
+            for you. Track all your favorite shows and events, ranging from
+            concerts, musicals, theatre and arts. It's time to discover a new
+            side to your city, right in the palm of your hand.
+            <br></br>
+            <br></br>
+            We believe in giving back and helping the local arts scene grow by
+            promoting local shows and talents, and enabling consumers to
+            discover, engage and consume our digital and live experiences via
+            WATch!.
           </Typography>
         </Grid>
 

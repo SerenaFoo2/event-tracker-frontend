@@ -5,15 +5,18 @@ import {
   NavLogoText,
 } from "../../styles/navBar";
 import { Stack } from "@mui/material";
-import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+import TheaterComedySharpIcon from "@mui/icons-material/TheaterComedySharp";
 
 export default function LeftBar() {
   return (
     <LeftContainer>
       <NavReactLink to="/">
         <Stack direction="row" alignItems="center" gap="5px" px={0} py={2}>
-          <EmojiEmotionsIcon color="primary" sx={{ fontSize: "2rem" }} />
-          <NavLogoText sx={{ display: "block" }}>My Events</NavLogoText>
+          <TheaterComedySharpIcon
+            sx={{ fontSize: "2rem" }}
+            style={{ color: "white" }}
+          />
+          <NavLogoText sx={{ display: "block" }}>WATch!</NavLogoText>
         </Stack>
       </NavReactLink>
 
