@@ -35,7 +35,16 @@ export const EventDetailsBody = styled("span")(({ theme }) => ({
 export const CardTitle = styled(Typography)(({ theme }) => ({
   color: Colors.text,
   fontSize: "1rem",
-  fontWeight: 400,
+  fontWeight: 500,
+  lineHeight: 1.75,
+  letterSpacing: "0.00938em",
+  // same as variant: subtitle1
+}));
+
+export const CardText = styled(Typography)(({ theme }) => ({
+  color: Colors.text,
+  fontSize: "0.65rem",
+  // fontWeight: 500,
   lineHeight: 1.75,
   letterSpacing: "0.00938em",
   // same as variant: subtitle1

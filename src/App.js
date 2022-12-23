@@ -8,10 +8,15 @@ import NotificationModal from "./components/modals/notificationModal";
 import ExamplefetchData from "./pages/examplefetchData";
 import { NotificationModalContext } from "./context/notificationModalContext";
 import { useContext } from "react";
+import { EventDetailsModalContext } from "./context/eventDetailsModalContext";
+import EventDetailsModal from "./components/modals/eventDetailsModal";
 
 function App() {
   const { notificationModal, setNotificationModal } = useContext(
     NotificationModalContext
+  );
+  const { eventDetailsModal, setEventDetailsModal } = useContext(
+    EventDetailsModalContext
   );
 
   return (
@@ -21,6 +26,13 @@ function App() {
         message={notificationModal.message}
         setNotification={setNotificationModal}
       ></NotificationModal>
+
+      <EventDetailsModal
+        modalOpen={eventDetailsModal.modalOpen}
+        eventDetails={eventDetailsModal}
+        setEventDetails={setEventDetailsModal}
+      />
+
       <Router>
         <Routes>
           <Route path="/">

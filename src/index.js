@@ -5,6 +5,7 @@ import { AuthContextProvider } from "./context/authContext";
 import { AllEventsContextProvider } from "./context/allEventsContext";
 import { UserContextProvider } from "./context/userContext";
 import { NotificationModalProvider } from "./context/notificationModalContext";
+import { EventDetailsModalProvider } from "./context/eventDetailsModalContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,9 @@ root.render(
       <AllEventsContextProvider>
         <UserContextProvider>
           <NotificationModalProvider>
-            <App />
+            <EventDetailsModalProvider>
+              <App />
+            </EventDetailsModalProvider>
           </NotificationModalProvider>
         </UserContextProvider>
       </AllEventsContextProvider>
