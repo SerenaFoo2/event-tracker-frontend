@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Box, Slide } from "@mui/material";
+import { Box, Slide, CircularProgress } from "@mui/material";
 import { AllEventsContext } from "../../context/allEventsContext";
 import { CarouselEventContainer } from "../../styles/carouselEvents";
 import { EventDetailsModalContext } from "../../context/eventDetailsModalContext";
@@ -80,7 +80,7 @@ export default function CarouselEvent() {
               alt={featuredEvents[eventIndex].title}
             />
           ) : (
-            "" //! add loader
+            <CircularProgress />
           )}
         </Box>
       </Slide>
