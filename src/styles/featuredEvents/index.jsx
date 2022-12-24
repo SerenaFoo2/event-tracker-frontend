@@ -59,7 +59,7 @@ export const CardText = styled(Typography)(({ theme }) => ({
 }));
 
 export const FeaturedEventsTitle = styled(Typography)(({ theme }) => ({
-  color: Colors.text,
+  color: "white",
   fontSize: "1.5rem",
   fontWeight: 500,
   lineHeight: 1.335,
