@@ -31,7 +31,8 @@ export const NavReactLink = styled(Link)({
 });
 
 export const NavLogoText = styled(Typography)(({ theme }) => ({
-  fontSize: "1rem",
+  fontSize: "1.3rem",
+  fontFamily: "Rubik 80s Fade",
   color: "white", //Colors.text
   fontWeight: 500,
   lineHeight: 1.57,
