@@ -1,3 +1,5 @@
+import { useSelector, useDispatch } from "react-redux";
+import { closeModal } from "../../redux/features/notificationModalSlice";
 import {
   Button,
   Dialog,
@@ -9,16 +11,16 @@ import {
 import { EventTextBody, EventTitle } from "../../styles/featuredEvents";
 
 /* Global notification Modal for generic use */
-export default function NotificationModal({
-  modalOpen,
-  message,
-  setNotification,
-}) {
+export default function NotificationModal() {
+  const dispatch = useDispatch();
+
+  const { modalOpen, message } = useSelector(
+    (state) => state.notificationModal
+  );
+
   const handleClose = () => {
-    // close modal.
-    setNotification((prev) => {
-      return { ...prev, modalOpen: false };
-    });
+    // close modal
+    dispatch(closeModal());
   };
 
   return (

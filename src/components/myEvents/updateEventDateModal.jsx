@@ -2,7 +2,8 @@ import { useContext } from "react";
 import httpStatus from "http-status";
 import { AuthContext } from "../../context/authContext";
 import { AllEventsContext } from "../../context/allEventsContext";
-import { NotificationModalContext } from "../../context/notificationModalContext";
+import { useDispatch } from "react-redux";
+import { notification } from "../../redux/features/notificationModalSlice";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -16,11 +17,12 @@ export default function UpdateEventDateModal({
   changeInfo,
   setNewEventDates,
 }) {
+  const dispatch = useDispatch();
+
   const { event, oldEvent, revert } = changeInfo;
 
   const { axiosJWT } = useContext(AuthContext);
   const { allEvents, setAllEvents } = useContext(AllEventsContext);
-  const { setNotificationModal } = useContext(NotificationModalContext);
 
   const handleClose = () => {
     // close modal.
@@ -67,13 +69,11 @@ export default function UpdateEventDateModal({
       if (response.status === httpStatus.OK) {
         setAllEvents(newAllEvents);
 
-        setNotificationModal((prev) => {
-          return {
-            ...prev,
-            modalOpen: true,
-            message: `New dates for "${event.title}" has been updated succesfully.`,
-          };
-        });
+        dispatch(
+          notification(
+            `New dates for "${event.title}" has been updated succesfully.`
+          )
+        );
 
         return;
       }

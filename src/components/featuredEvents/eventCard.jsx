@@ -42,7 +42,6 @@ export default function ImgMediaCard({ event }) {
   /* open modal by:
       - update "setSelectedEvent" and pass in all other information.  */
   function handleClickAddEvent() {
-    console.log("handleClickAddEvent");
     setSelectedEvent((prev) => {
       return { ...prev, modalOpen: true, event: event, ADDOrREMOVE: "ADD" };
     });

@@ -3,7 +3,8 @@ import httpStatus from "http-status";
 import { AuthContext } from "../../context/authContext";
 import { UserContext } from "../../context/userContext";
 import { AllEventsContext } from "../../context/allEventsContext";
-import { NotificationModalContext } from "../../context/notificationModalContext";
+import { useDispatch } from "react-redux";
+import { notification } from "../../redux/features/notificationModalSlice";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -17,10 +18,11 @@ export default function RemoveEventModal({
   event,
   setSelectedEvent,
 }) {
+  const dispatch = useDispatch();
+
   const { axiosJWT } = useContext(AuthContext);
   const { userInfo, setUserInfo } = useContext(UserContext);
   const { allEvents, setAllEvents } = useContext(AllEventsContext);
-  const { setNotificationModal } = useContext(NotificationModalContext);
 
   const handleClose = () => {
     // close modal.
@@ -74,14 +76,11 @@ export default function RemoveEventModal({
             return { ...prev, savedEvents: newSavedEvents };
           });
 
-          setNotificationModal((prev) => {
-            return {
-              ...prev,
-              modalOpen: true,
-              message:
-                "Event has been successfully removed from your calender!",
-            };
-          });
+          dispatch(
+            notification(
+              "Event has been successfully removed from your calender!"
+            )
+          );
         }
         return;
       } else {
@@ -105,14 +104,11 @@ export default function RemoveEventModal({
           return { ...prev, savedEvents: newSavedEvents };
         });
 
-        setNotificationModal((prev) => {
-          return {
-            ...prev,
-            modalOpen: true,
-            message:
-              "Event has been successfully removed from both event's and users' databases!",
-          };
-        });
+        dispatch(
+          notification(
+            "Event has been successfully removed from both event's and users' databases!"
+          )
+        );
         return;
       }
     } catch (err) {

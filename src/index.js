@@ -1,25 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import { StoreProvider } from "../src/redux/store";
 import { AuthContextProvider } from "./context/authContext";
 import { AllEventsContextProvider } from "./context/allEventsContext";
 import { UserContextProvider } from "./context/userContext";
-import { NotificationModalProvider } from "./context/notificationModalContext";
 import { EventDetailsModalProvider } from "./context/eventDetailsModalContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <AllEventsContextProvider>
-        <UserContextProvider>
-          <NotificationModalProvider>
+    <StoreProvider>
+      <AuthContextProvider>
+        <AllEventsContextProvider>
+          <UserContextProvider>
             <EventDetailsModalProvider>
               <App />
             </EventDetailsModalProvider>
-          </NotificationModalProvider>
-        </UserContextProvider>
-      </AllEventsContextProvider>
-    </AuthContextProvider>
+          </UserContextProvider>
+        </AllEventsContextProvider>
+      </AuthContextProvider>
+    </StoreProvider>
   </React.StrictMode>
 );

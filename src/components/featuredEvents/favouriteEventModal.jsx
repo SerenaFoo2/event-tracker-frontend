@@ -2,7 +2,8 @@ import { useContext } from "react";
 import httpStatus from "http-status";
 import { AuthContext } from "../../context/authContext";
 import { UserContext } from "../../context/userContext";
-import { NotificationModalContext } from "../../context/notificationModalContext";
+import { useDispatch } from "react-redux";
+import { notification } from "../../redux/features/notificationModalSlice";
 import {
   Button,
   Dialog,
@@ -18,9 +19,10 @@ export default function FavouriteEventModal({
   selectedEvent,
   setSelectedEvent,
 }) {
+  const dispatch = useDispatch();
+
   const { axiosJWT } = useContext(AuthContext);
   const { userInfo, setUserInfo } = useContext(UserContext);
-  const { setNotificationModal } = useContext(NotificationModalContext);
 
   const { ADDOrREMOVE, event } = selectedEvent;
 
@@ -58,13 +60,11 @@ export default function FavouriteEventModal({
           return { ...prev, savedEvents: newSavedEvents };
         });
 
-        setNotificationModal((prev) => {
-          return {
-            ...prev,
-            modalOpen: true,
-            message: "Event has been removed successfully from your calender!",
-          };
-        });
+        dispatch(
+          notification(
+            "Event has been removed successfully from your calender!"
+          )
+        );
         return;
       }
 
@@ -101,13 +101,9 @@ export default function FavouriteEventModal({
           return { ...prev, savedEvents: newSavedEvents };
         });
 
-        setNotificationModal((prev) => {
-          return {
-            ...prev,
-            modalOpen: true,
-            message: "Event has been added successfully into your calender!",
-          };
-        });
+        dispatch(
+          notification("Event has been added successfully into your calender!")
+        );
         return;
       }
       //any other error

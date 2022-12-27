@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { AllEventsContext } from "../../context/allEventsContext";
 import httpStatus from "http-status";
-import { NotificationModalContext } from "../../context/notificationModalContext";
+import { useDispatch } from "react-redux";
+import { notification } from "../../redux/features/notificationModalSlice";
 import { TextField, Button, Typography, Stack, Box } from "@mui/material";
 import { FooterText } from "../../styles/signUp";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -13,9 +14,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 export default function CreateEventForm() {
+  const dispatch = useDispatch();
+
   const { axiosJWT } = useContext(AuthContext);
   const { setAllEvents } = useContext(AllEventsContext);
-  const { setNotificationModal } = useContext(NotificationModalContext);
 
   const inputInforDefault = {
     title: "", // "new event title",
@@ -65,13 +67,7 @@ export default function CreateEventForm() {
           return [...prev, data];
         });
 
-        setNotificationModal((prev) => {
-          return {
-            ...prev,
-            modalOpen: true,
-            message: "New event has been created successfully!",
-          };
-        });
+        dispatch(notification("New event has been created successfully!"));
         return navigate("/myEvents");
       }
 
