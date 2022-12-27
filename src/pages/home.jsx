@@ -31,7 +31,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Box>
+    <Box style={{ background: "black" }}>
       <NavigationBar />
       <CarouselEvent />
       <FeaturedEvents />
