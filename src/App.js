@@ -5,25 +5,14 @@ import Login from "./pages/login";
 import MyEvents from "./pages/myEvents";
 import CreateEventForm from "./components/forms/createEventForm";
 import NotificationModal from "./components/modals/notificationModal";
-import { useContext } from "react";
-import { EventDetailsModalContext } from "./context/eventDetailsModalContext";
 import EventDetailsModal from "./components/modals/eventDetailsModal";
 // import ExamplefetchData from "./forDevelopmentOnly/examplefetchData";
 
 function App() {
-  const { eventDetailsModal, setEventDetailsModal } = useContext(
-    EventDetailsModalContext
-  );
-
   return (
     <>
       <NotificationModal />
-
-      <EventDetailsModal
-        modalOpen={eventDetailsModal.modalOpen}
-        eventDetails={eventDetailsModal}
-        setEventDetails={setEventDetailsModal}
-      />
+      <EventDetailsModal />
 
       <Router>
         <Routes>

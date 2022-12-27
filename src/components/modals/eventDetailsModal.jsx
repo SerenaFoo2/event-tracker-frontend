@@ -1,3 +1,5 @@
+import { useSelector, useDispatch } from "react-redux";
+import { closeModal } from "../../redux/features/eventDetailsModalSlice";
 import {
   Button,
   Dialog,
@@ -12,18 +14,13 @@ import {
   EventDetailsBody,
 } from "../../styles/featuredEvents";
 
-export default function EventDetailsModal({
-  modalOpen,
-  eventDetails,
-  setEventDetails,
-}) {
-  const { event } = eventDetails;
+export default function EventDetailsModal() {
+  const dispatch = useDispatch();
+
+  const { modalOpen, event } = useSelector((state) => state.eventDetailsModal);
 
   const handleClose = () => {
-    // close modal.
-    setEventDetails((prev) => {
-      return { ...prev, modalOpen: false };
-    });
+    dispatch(closeModal());
   };
 
   /*Display event full details */

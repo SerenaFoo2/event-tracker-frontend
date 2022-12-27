@@ -5,7 +5,6 @@ import { StoreProvider } from "../src/redux/store";
 import { AuthContextProvider } from "./context/authContext";
 import { AllEventsContextProvider } from "./context/allEventsContext";
 import { UserContextProvider } from "./context/userContext";
-import { EventDetailsModalProvider } from "./context/eventDetailsModalContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,9 +13,7 @@ root.render(
       <AuthContextProvider>
         <AllEventsContextProvider>
           <UserContextProvider>
-            <EventDetailsModalProvider>
-              <App />
-            </EventDetailsModalProvider>
+            <App />
           </UserContextProvider>
         </AllEventsContextProvider>
       </AuthContextProvider>

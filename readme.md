@@ -12,6 +12,7 @@ Frontend:
 
 - [React](https://reactjs.org/)
 - [React Router](https://reactrouter.com/en/main)
+- [React Redux](https://react-redux.js.org/)
 - [Material UI](https://mui.com/material-ui/getting-started/overview/)
 - [Axios](https://axios-http.com/)
 - [Full Calender](https://fullcalendar.io/)
