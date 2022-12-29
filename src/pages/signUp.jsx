@@ -69,29 +69,42 @@ export default function SignUp() {
   };
 
   return (
-    <div>
-      <img
-        src="https://images.unsplash.com/photo-1438012940875-4bf705025a8a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-        alt="dance"
-        objectfit="cover"
-        height="100%"
-        width="100%"
-        position="absolute"
-        filter="blur(8px)"
+    <Box
+      style={{
+        width: "100vw",
+        height: "100vh",
+        position: "relative",
+      }}
+    >
+      <Box
         style={{
-          background:
-            "linear-gradient(to bottom, rgba(255, 0, 0, 0.2), rgba(0, 0, 0, 0.75))",
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          backgroundImage: `url(${"https://images.unsplash.com/photo-1438012940875-4bf705025a8a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          filter: "blur(8px)",
         }}
       />
-      <div
+      <Box
         style={{
+          width: "100%",
+          height: "100%",
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          justifyContent: "center",
-          alignItems: "center",
+          background:
+            "linear-gradient(to bottom, rgba(255, 0, 0, 0.2), rgba(0, 0, 0, 0.75))",
+          zIndex: 2,
+        }}
+      />
+
+      <Stack
+        alignItems="center"
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          zIndex: 3,
         }}
       >
         <Box sx={{ textAlign: "center" }} pt={4}>
@@ -99,74 +112,72 @@ export default function SignUp() {
             <strong>Create Account</strong>
           </FormTitle>
         </Box>
-        <Stack justifyContent="center" alignItems="center">
-          <Box component="form" onSubmit={handleSubmitSignUp}>
-            <Stack spacing={2} p={3} sx={{ width: 250 }}>
-              <TextField
-                inputProps={{ style: { fontSize: 14 } }}
-                InputLabelProps={{ style: { fontSize: 14 } }}
-                size="small"
-                type="text"
-                label="Name"
-                variant="outlined"
-                name="name"
-                value={inputInfor.name}
-                required
-                onChange={(e) => {
-                  handleInputsChange(e);
-                }}
-              />
-              <TextField
-                inputProps={{ style: { fontSize: 14 } }}
-                InputLabelProps={{ style: { fontSize: 14 } }}
-                size="small"
-                type="email"
-                label="Email"
-                variant="outlined"
-                name="email"
-                value={inputInfor.email}
-                required
-                onChange={(e) => {
-                  handleInputsChange(e);
-                }}
-              />
-              <TextField
-                inputProps={{ style: { fontSize: 14 } }}
-                InputLabelProps={{ style: { fontSize: 14 } }}
-                size="small"
-                type="password"
-                label="Password"
-                variant="outlined"
-                name="password"
-                value={inputInfor.password}
-                required
-                onChange={(e) => {
-                  handleInputsChange(e);
-                }}
-              />
-              <FooterText sx={{ textAlign: "left", fontSize: 10 }}>
-                By signing up, I agree to the XXX's Terms of Service, Privacy
-                Policy and Refund Policy.
-              </FooterText>
-              <Button variant="contained" type="submit" size="small">
-                CREATE
-              </Button>
-
-              {error && <FooterText sx={{ color: "red" }}>{error}</FooterText>}
-            </Stack>
-          </Box>
-
-          <Stack spacing={2} sx={{ width: 250 }}>
-            <FooterText>
-              {`Already have an account? `} <Link to="/login">Login</Link>
+        <Box component="form" onSubmit={handleSubmitSignUp}>
+          <Stack spacing={2} p={3} sx={{ width: 250 }}>
+            <TextField
+              inputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
+              size="small"
+              type="text"
+              label="Name"
+              variant="outlined"
+              name="name"
+              value={inputInfor.name}
+              required
+              onChange={(e) => {
+                handleInputsChange(e);
+              }}
+            />
+            <TextField
+              inputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
+              size="small"
+              type="email"
+              label="Email"
+              variant="outlined"
+              name="email"
+              value={inputInfor.email}
+              required
+              onChange={(e) => {
+                handleInputsChange(e);
+              }}
+            />
+            <TextField
+              inputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
+              size="small"
+              type="password"
+              label="Password"
+              variant="outlined"
+              name="password"
+              value={inputInfor.password}
+              required
+              onChange={(e) => {
+                handleInputsChange(e);
+              }}
+            />
+            <FooterText sx={{ textAlign: "left", fontSize: 10 }}>
+              By signing up, I agree to the WATch!'s Terms of Service, Privacy
+              Policy and Refund Policy.
             </FooterText>
+            <Button variant="contained" type="submit" size="small">
+              CREATE
+            </Button>
 
-            <FooterText sx={{ textAlign: "left" }}>
-              <Link to="/">Return to Home Page </Link>
-            </FooterText>
+            {error && <FooterText sx={{ color: "red" }}>{error}</FooterText>}
           </Stack>
+        </Box>
+
+        <Stack spacing={2} sx={{ width: 250 }}>
+          <FooterText>
+            {`Already have an account? `} <Link to="/login">Login</Link>
+          </FooterText>
+
+          <FooterText sx={{ textAlign: "left" }}>
+            <Link to="/">Return to Home Page </Link>
+          </FooterText>
         </Stack>
-      </div>
-    </div>
+      </Stack>
+    </Box>
   );
 }

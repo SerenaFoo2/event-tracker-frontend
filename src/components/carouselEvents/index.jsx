@@ -56,18 +56,18 @@ export default function CarouselEvent() {
 
   return (
     <CarouselEventContainer>
-      <Slide
-        direction={show ? "left" : "right"}
-        in={show}
-        timeout={{ enter: 500, exit: 100 }}
-      >
-        <Box
-          sx={{
-            height: "400px",
-            width: "100%",
-          }}
+      {featuredEvents[0] ? (
+        <Slide
+          direction={show ? "left" : "right"}
+          in={show}
+          timeout={{ enter: 500, exit: 100 }}
         >
-          {featuredEvents[0] ? (
+          <Box
+            sx={{
+              height: "400px",
+              width: "100%",
+            }}
+          >
             <img
               height="400px"
               width="100%"
@@ -75,11 +75,20 @@ export default function CarouselEvent() {
               onClick={handleClickImage}
               alt={featuredEvents[eventIndex].title}
             />
-          ) : (
-            <CircularProgress />
-          )}
+          </Box>
+        </Slide>
+      ) : (
+        <Box
+          sx={{
+            height: "400px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
         </Box>
-      </Slide>
+      )}
     </CarouselEventContainer>
   );
 }

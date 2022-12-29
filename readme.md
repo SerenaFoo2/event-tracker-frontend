@@ -1,8 +1,8 @@
 # WATch! (Events Tracker)
 
-This is a MERN full stack web application created for General Assembly's SEIF (Software Engineering Immersive Flex) Bootcamp Program. It's a group of 2. This is frontend portion of web app; backend portion can be found [here](https://github.com/hongyuanloo/event-tracker-backend).
+This is a MERN full stack web application created for General Assembly's SEIF (Software Engineering Immersive Flex) Bootcamp Program. It's a group of 2 project. This is frontend portion of web app; backend portion can be found [here](https://github.com/hongyuanloo/event-tracker-backend).
 
-WATch! (also refers to Watch WAT!) is events tracking platform that list all available events. Logged in user can add or remove their favourite events from calendar. While Admin access can create, modifiy or remove events from the platform.
+WATch! (also refers to Watch WAT!) is a platform that list all events that is happening around you. Logged in user can track their favourite events by adding or removing them from their calendar. With admin access, event can be created, modified or removed from the platform.
 
 ## Tech Stack / Libraries
 
