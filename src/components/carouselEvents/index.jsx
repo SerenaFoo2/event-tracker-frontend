@@ -1,8 +1,9 @@
 import { useEffect, useState, useContext } from "react";
-import { Box, Slide, CircularProgress } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { showEventDetials } from "../../redux/features/eventDetailsModalSlice";
 import { AllEventsContext } from "../../context/allEventsContext";
+import { Box, Slide, CircularProgress } from "@mui/material";
 import { CarouselEventContainer } from "../../styles/carouselEvents";
-import { EventDetailsModalContext } from "../../context/eventDetailsModalContext";
 
 export default function CarouselEvent() {
   const [eventIndex, setEventIndex] = useState(0);
@@ -11,7 +12,8 @@ export default function CarouselEvent() {
   const [featuredEvents, setFeaturedEvents] = useState([]);
 
   const { allEvents } = useContext(AllEventsContext);
-  const { setEventDetailsModal } = useContext(EventDetailsModalContext);
+
+  const dispatch = useDispatch();
 
   /*  get all events with "is_featured === true", and update to "featuredEvents" */
   useEffect(() => {
@@ -49,29 +51,23 @@ export default function CarouselEvent() {
 
   function handleClickImage() {
     const selectedEvent = featuredEvents[eventIndex];
-    setEventDetailsModal((prev) => {
-      return {
-        ...prev,
-        modalOpen: true,
-        event: selectedEvent,
-      };
-    });
+    dispatch(showEventDetials(selectedEvent));
   }
 
   return (
     <CarouselEventContainer>
-      <Slide
-        direction={show ? "left" : "right"}
-        in={show}
-        timeout={{ enter: 500, exit: 100 }}
-      >
-        <Box
-          sx={{
-            height: "400px",
-            width: "100%",
-          }}
+      {featuredEvents[0] ? (
+        <Slide
+          direction={show ? "left" : "right"}
+          in={show}
+          timeout={{ enter: 500, exit: 100 }}
         >
-          {featuredEvents[0] ? (
+          <Box
+            sx={{
+              height: "400px",
+              width: "100%",
+            }}
+          >
             <img
               height="400px"
               width="100%"
@@ -79,11 +75,20 @@ export default function CarouselEvent() {
               onClick={handleClickImage}
               alt={featuredEvents[eventIndex].title}
             />
-          ) : (
-            <CircularProgress />
-          )}
+          </Box>
+        </Slide>
+      ) : (
+        <Box
+          sx={{
+            height: "400px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
         </Box>
-      </Slide>
+      )}
     </CarouselEventContainer>
   );
 }

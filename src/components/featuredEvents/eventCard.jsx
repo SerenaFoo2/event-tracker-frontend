@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
 import FavouriteEventModal from "./favouriteEventModal";
 import { UserContext } from "../../context/userContext";
-import { EventDetailsModalContext } from "../../context/eventDetailsModalContext";
+import { useDispatch } from "react-redux";
+import { showEventDetials } from "../../redux/features/eventDetailsModalSlice";
 import {
   Box,
   Card,
@@ -17,6 +18,8 @@ import { CardTitle, CardText } from "../../styles/featuredEvents";
 export default function ImgMediaCard({ event }) {
   const { title, image_urls, start, end, location } = event;
 
+  const dispatch = useDispatch();
+
   // use in <RemoveEventModal>
   const defaultSelectedEvent = {
     event: {},
@@ -27,22 +30,14 @@ export default function ImgMediaCard({ event }) {
   const [selectedEvent, setSelectedEvent] = useState(defaultSelectedEvent);
 
   const { userInfo } = useContext(UserContext);
-  const { setEventDetailsModal } = useContext(EventDetailsModalContext);
 
   function handleClickLearnMore() {
-    setEventDetailsModal((prev) => {
-      return {
-        ...prev,
-        modalOpen: true,
-        event: event,
-      };
-    });
+    dispatch(showEventDetials(event));
   }
 
   /* open modal by:
       - update "setSelectedEvent" and pass in all other information.  */
   function handleClickAddEvent() {
-    console.log("handleClickAddEvent");
     setSelectedEvent((prev) => {
       return { ...prev, modalOpen: true, event: event, ADDOrREMOVE: "ADD" };
     });
